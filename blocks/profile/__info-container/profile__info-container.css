@@ -1,0 +1,7 @@
+.profile__info-container {
+    max-width: 415px;
+    margin: 0 0 0 30px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}

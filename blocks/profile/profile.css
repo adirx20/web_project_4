@@ -1,4 +1,9 @@
 .profile {
+    border: 1px red solid;
     max-width: 880px;
     width: 100%;
+    display: flex;
+    margin: 0;
+    padding: 40px 0 50px;
+    align-items: center;
 }

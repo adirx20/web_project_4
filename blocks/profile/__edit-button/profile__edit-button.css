@@ -1,6 +1,7 @@
 .profile__edit-button {
     max-width: 24px;
     margin: 0;
-    background: url('../../../images/edit-button.png') 
-    
+    background-color: rgba(0, 0, 0, 1);
+    border: white 1px solid;
+    align-self: center;
 }
