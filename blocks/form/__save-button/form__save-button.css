@@ -1,4 +1,17 @@
 .form__save-button {
+    max-width: 358px;
+    width: 100%;
     margin: 0;
     display: block;
+    padding: 15px 0 20px;
+    background-color: rgba(0, 0, 0, 1);
+    color: rgba(255, 255, 255, 1);
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: opacity .5s linear;
+}
+
+.form__save-button:hover {
+    opacity: .8;
 }
