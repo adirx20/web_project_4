@@ -1,7 +1,6 @@
 .elements {
-    max-width: 880px;
-    width: 100%;
-    margin: 0;
+    max-width: 100%;
+    margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(2, 1fr);
@@ -11,10 +10,9 @@
     color: rgba(0, 0, 0, 1);
 }
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 768px) {
     .elements {
         grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: repeat(3, 1fr);
     }
 }
 
