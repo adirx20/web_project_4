@@ -1,9 +1,38 @@
-// opening and closing the popup --->
+// Cards
+const initialCards = [
+    {
+      name: "Yosemite Valley",
+      link: "https://code.s3.yandex.net/web-code/yosemite.jpg"
+    },
+    {
+      name: "Lake Louise",
+      link: "https://code.s3.yandex.net/web-code/lake-louise.jpg"
+    },
+    {
+      name: "Bald Mountains",
+      link: "https://code.s3.yandex.net/web-code/bald-mountains.jpg"
+    },
+    {
+      name: "Latemar",
+      link: "https://code.s3.yandex.net/web-code/latemar.jpg"
+    },
+    {
+      name: "Vanoise National Park",
+      link: "https://code.s3.yandex.net/web-code/vanoise.jpg"
+    },
+    {
+      name: "Lago di Braies",
+      link: "https://code.s3.yandex.net/web-code/lago.jpg"
+    }
+  ];
+
+const template = document.querySelector('.card-template');
+
 let popup = document.querySelector('.popup');
-let editButton = document.querySelector('.profile__edit-button');
-let closeButton = document.querySelector('.popup__close-button');
 let formElement = document.querySelector('.form');
 let saveButton = document.querySelector('.form__save-button');
+let closeButton = document.querySelector('.popup__close-button');
+let editButton = document.querySelector('.profile__edit-button');
 let nameInput = formElement.querySelector('.form__input_type_name');
 let jobInput = formElement.querySelector('.form__input_type_profession');
 let name = document.querySelector('.profile__name');
@@ -27,27 +56,10 @@ function handleFormSubmit(evt) {
     
     name.textContent = nameInput.value;
     job.textContent = jobInput.value;
-    popup.classList.remove('popup_opened');
+    popupClose();
 }
 
 editButton.addEventListener('click', popupOpen);
 closeButton.addEventListener('click', popupClose);
 formElement.addEventListener('submit', handleFormSubmit);
-//
-
-
-// using the like button (tried unsuccessfully) --->
-// let likeButtons = document.querySelectorAll('.element__like-button');
-
-// function likeActive(evt) {
-//     evt.preventDefault();
-    
-//     likeButtons.classList.add('element__like-button_active');
-// }
-
-// for (i = 0; i < likeButtons.length; i++) {
-//     let likeButton = likeButtons[i]
-    
-//     likeButton.addEventListener('click', likeActive);
-// }
 //
