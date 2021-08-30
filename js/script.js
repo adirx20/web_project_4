@@ -25,8 +25,29 @@ const initialCards = [
       link: "https://code.s3.yandex.net/web-code/lago.jpg"
     }
   ];
+const cardItem = document.querySelector('.card-template').content.querySelector('.element');
+const cardsContainer = document.querySelector('.elements');
 
-const template = document.querySelector('.card-template');
+initialCards.forEach( cardData => {
+    console.log('cardData', cardData);
+
+    const cardElement = cardItem.cloneNode(true);
+    const title = cardElement.querySelector('.element__title');
+    const image = cardElement.querySelector('.element__image');
+
+    title.textContent = cardData.name;
+    image.src = `${cardData.link}`;
+    cardsContainer.append(cardElement);
+});
+
+
+
+
+
+
+
+
+
 
 let popup = document.querySelector('.popup');
 let formElement = document.querySelector('.form');
