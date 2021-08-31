@@ -1,4 +1,4 @@
-// Cards
+// cards
 const initialCards = [
     {
       name: "Yosemite Valley",
@@ -25,20 +25,71 @@ const initialCards = [
       link: "https://code.s3.yandex.net/web-code/lago.jpg"
     }
   ];
+
 const cardItem = document.querySelector('.card-template').content.querySelector('.element');
 const cardsContainer = document.querySelector('.elements');
 
-initialCards.forEach( cardData => {
-    console.log('cardData', cardData);
+// modals
+const editProfileModal = document.querySelector('.popup_type_edit-profile');
+const addCardModal = document.querySelector('.popup_type_add-card');
 
+// close buttons
+const editProfileModalCloseButton = editProfileModal.querySelector('.popup__close-button');
+const addCardModalCloseButton = addCardModal.querySelector('.popup__close-button');
+
+// open buttons
+const editProfileButton = document.querySelector('.profile__edit-button');
+const addCardButton = document.querySelector('.profile__add-button');
+
+// inputs 
+const profileNameInput = document.querySelector('.form__input_type_name');
+const profileJobInput = document.querySelector('.form__input_type_profession');
+const cardTitleInput = document.querySelector('.form__input_type_card-title');
+const cardLinkInput = document.querySelector('.form__input_type_card-link');
+
+// forms
+const editProfileForm = editProfileModal.querySelector('.form');
+const addCardForm = addCardModal.querySelector('.form');
+
+// Modal toggle function
+function toggleModal(modal) {
+    modal.classList.toggle('popup_opened');
+}
+
+// 'Edit Profile' event listeners
+editProfileButton.addEventListener('click', () => {
+    toggleModal(editProfileModal);
+});
+
+editProfileModalCloseButton.addEventListener('click', () => {
+    toggleModal(editProfileModal);
+});
+
+// 'Add Card' event listeners
+addCardButton.addEventListener('click', () => {
+    toggleModal(addCardModal);
+});
+
+addCardModalCloseButton.addEventListener('click', () => {
+    toggleModal(addCardModal);
+});
+
+addCardForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+})
+
+function generateCard(cardData) {
     const cardElement = cardItem.cloneNode(true);
+
     const title = cardElement.querySelector('.element__title');
     const image = cardElement.querySelector('.element__image');
 
     title.textContent = cardData.name;
-    image.src = `${cardData.link}`;
+    image.style.backgroundImage = `url(${cardData.link})`;
     cardsContainer.append(cardElement);
-});
+};
+
+initialCards.forEach(generateCard);
 
 
 
@@ -48,39 +99,38 @@ initialCards.forEach( cardData => {
 
 
 
+// let modal = document.querySelector('.popup');
+// let formElement = document.querySelector('.form');
+// let saveButton = document.querySelector('.form__save-button');
+// let closeButton = document.querySelector('.popup__close-button');
+// let editButton = document.querySelector('.profile__edit-button');
+// let nameInput = formElement.querySelector('.form__input_type_name');
+// let jobInput = formElement.querySelector('.form__input_type_profession');
+// let name = document.querySelector('.profile__name');
+// let job = document.querySelector('.profile__profession');
 
-let popup = document.querySelector('.popup');
-let formElement = document.querySelector('.form');
-let saveButton = document.querySelector('.form__save-button');
-let closeButton = document.querySelector('.popup__close-button');
-let editButton = document.querySelector('.profile__edit-button');
-let nameInput = formElement.querySelector('.form__input_type_name');
-let jobInput = formElement.querySelector('.form__input_type_profession');
-let name = document.querySelector('.profile__name');
-let job = document.querySelector('.profile__profession');
-
-function popupOpen() {
-    nameInput.value = name.textContent;
-    jobInput.value = job.textContent;
+// function modalOpen() {
+//     nameInput.value = name.textContent;
+//     jobInput.value = job.textContent;
     
-    popup.classList.add('popup_opened');
-}
+//     modal.classList.add('popup_opened');
+// }
 
-function popupClose() {
-    popup.classList.remove('popup_opened');
-}
-//
+// function modalClose() {
+//     modal.classList.remove('popup_opened');
+// }
+// //
 
-// submitting the form --->
-function handleFormSubmit(evt) {
-    evt.preventDefault();
+// // submitting the form --->
+// function handleFormSubmit(evt) {
+//     evt.preventDefault();
     
-    name.textContent = nameInput.value;
-    job.textContent = jobInput.value;
-    popupClose();
-}
+//     name.textContent = nameInput.value;
+//     job.textContent = jobInput.value;
+//     modalClose();
+// }
 
-editButton.addEventListener('click', popupOpen);
-closeButton.addEventListener('click', popupClose);
-formElement.addEventListener('submit', handleFormSubmit);
-//
+// editButton.addEventListener('click', modalOpen);
+// closeButton.addEventListener('click', modalClose);
+// formElement.addEventListener('submit', handleFormSubmit);
+// //
