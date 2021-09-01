@@ -6,4 +6,5 @@
     object-fit: contain;
     background: center no-repeat;
     border-radius: 10px 10px 0 0;
+    cursor: pointer;
 }
