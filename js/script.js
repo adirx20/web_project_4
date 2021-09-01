@@ -148,36 +148,3 @@ imageModalCloseButton.addEventListener('click', () => {
 
 // generate cards
 initialCards.forEach(generateCard);
-
-
-
-
-
-
-
-
-
-// let modal = document.querySelector('.popup');
-
-// let saveButton = document.querySelector('.form__save-button');
-// let closeButton = document.querySelector('.popup__close-button');
-// let editButton = document.querySelector('.profile__edit-button');
-// let nameInput = formElement.querySelector('.form__input_type_name');
-// let jobInput = formElement.querySelector('.form__input_type_profession');
-// let name = document.querySelector('.profile__name');
-// let job = document.querySelector('.profile__profession');
-
-// function modalOpen() {
-//     nameInput.value = name.textContent;
-//     jobInput.value = job.textContent;
-    
-//     modal.classList.add('popup_opened');
-// }
-
-// function modalClose() {
-//     modal.classList.remove('popup_opened');
-// }
-// //
-
-
-// //
