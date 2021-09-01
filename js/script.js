@@ -58,6 +58,11 @@ function toggleModal(modal) {
 
 // 'Edit Profile' event listeners
 editProfileButton.addEventListener('click', () => {
+    const name = document.querySelector('.profile__name');
+    const job = document.querySelector('.profile__profession');
+
+    profileNameInput.value = name.textContent;
+    profileJobInput.value = job.textContent;
     toggleModal(editProfileModal);
 });
 
@@ -67,6 +72,7 @@ editProfileModalCloseButton.addEventListener('click', () => {
 
 // 'Add Card' event listeners
 addCardButton.addEventListener('click', () => {
+    addCardForm.reset();
     toggleModal(addCardModal);
 });
 
@@ -76,6 +82,10 @@ addCardModalCloseButton.addEventListener('click', () => {
 
 addCardForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
+
+    generateCard({name: cardTitleInput.value, link: cardLinkInput.value});
+
+    toggleModal(addCardModal);
 })
 
 function generateCard(cardData) {
@@ -83,9 +93,20 @@ function generateCard(cardData) {
 
     const title = cardElement.querySelector('.element__title');
     const image = cardElement.querySelector('.element__image');
+    const deleteButton = cardElement.querySelector('.element__delete-button');
+    const likeButton = cardElement.querySelector('.element__like-button');
 
     title.textContent = cardData.name;
     image.style.backgroundImage = `url(${cardData.link})`;
+
+    likeButton.addEventListener('click', () => {
+        likeButton.classList.toggle('element__like-button_active');
+    });
+
+    deleteButton.addEventListener('click', () => {
+        cardElement.remove();
+    });
+
     cardsContainer.append(cardElement);
 };
 
