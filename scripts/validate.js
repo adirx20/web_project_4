@@ -1,3 +1,28 @@
+// show and hide error functions
+const showError = (input) => {
+  const errorElement = document.querySelector(`#${input.id}-error`);
+  const errorMessage = input.validationMessage;
+
+  errorElement.textContent = errorMessage;
+}
+
+const hideError = (input) => {
+  const errorElement = document.querySelector(`#${input.id}-error`);
+
+  errorElement.textContent = '';
+}
+
+// check validity function
+const checkValidity = (input) => {
+  if (input.validity.valid) {
+    hideError(input);
+  }
+  else {
+    showError(input);
+  }
+}
+
+// enable validation function
 const enableValidation = (settings) => {
     const forms = [...document.querySelectorAll('.form')];
 
@@ -6,6 +31,16 @@ const enableValidation = (settings) => {
     forms.forEach( form => {
       form.addEventListener('submit', evt => {
         evt.preventDefault();
+      });
+
+      const inputs = [...form.querySelectorAll('.form__input')];
+
+      inputs.forEach( input => {
+        input.addEventListener('input', () => {
+          checkValidity(input);
+          // check validity
+          // toggleButtonState
+        });
       });
     });
 
@@ -18,6 +53,7 @@ const enableValidation = (settings) => {
             //  if no => show error => default browser message for input
 }
 
+// settings list
 const config = {
     formSelector: ".popup__form",
     inputSelector: ".popup__input",

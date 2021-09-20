@@ -39,8 +39,10 @@
         <button class='popup__close-button button-effect' type='button' aria-label='close'></button>
         <h2 class='popup__title'>Edit profile</h2>
         <form class='form' name='profile'>
-          <input class='form__input form__input_type_name' type='text' name='name' placeholder='Name' value=''>
-          <input class='form__input form__input_type_profession' type='text' name='profession' placeholder='About me' value=''>
+          <input id='name-input' class='form__input form__input_type_name' type='text' name='name' placeholder='Name' value='' required minlength='2' maxlength='40'>
+          <span id='name-input-error'></span>
+          <input id='proffession-input' class='form__input form__input_type_profession' type='text' name='profession' placeholder='About me' value='' required minlength='2' maxlength='200'>
+          <span id='proffession-input-error'></span>
           <button class='form__save-button' type='submit'>Save</button>
         </form>
       </div>
@@ -51,8 +53,10 @@
         <button class='popup__close-button button-effect' type='button' aria-label='close'></button>
         <h2 class='popup__title'>New Place</h2>
         <form class='form' name='new'>
-          <input class='form__input form__input_type_card-title' type='text' name='card-title' placeholder='Title' value=''>
-          <input class='form__input form__input_type_card-link' type='text' name='card-link' placeholder='Image URL' value=''>
+          <input id='card-input' class='form__input form__input_type_card-title' type='text' name='card-title' placeholder='Title' value='' required minlength='1' maxlength='30'>
+          <span id='card-input-error'></span>
+          <input id='card-link-input' class='form__input form__input_type_card-link' type='url' name='card-link' placeholder='Image URL' value='' required>
+          <span id='card-link-input-error'></span>
           <button class='form__save-button' type='submit'>Save</button>
         </form>
       </div>
