@@ -2,14 +2,30 @@
 const showError = (input) => {
   const errorElement = document.querySelector(`#${input.id}-error`);
   const errorMessage = input.validationMessage;
-
+  
   errorElement.textContent = errorMessage;
+  input.classList.add('form__input_theme_error');
 }
 
 const hideError = (input) => {
   const errorElement = document.querySelector(`#${input.id}-error`);
-
+  
   errorElement.textContent = '';
+  input.classList.remove('form__input_theme_error');
+}
+
+// toggle button state function
+const toggleButtonState = (inputs, button) => {
+  const isValid = inputs.every( input => input.validity.valid );
+
+  if (isValid) {
+    button.disabled = false;
+    button.classList.remove('.form__save-button_disabled');
+  }
+  else {
+    button.disabled = 'disabled';
+    button.classList.add('.form__save-button_disabled');
+  }
 }
 
 // check validity function
@@ -34,12 +50,12 @@ const enableValidation = (settings) => {
       });
 
       const inputs = [...form.querySelectorAll('.form__input')];
+      const button = form.querySelector('.form__save-button');
 
       inputs.forEach( input => {
         input.addEventListener('input', () => {
           checkValidity(input);
-          // check validity
-          // toggleButtonState
+          toggleButtonState(inputs, button);
         });
       });
     });
