@@ -1,46 +1,46 @@
 // show and hide error functions
-const showError = (input) => {
+const showError = (input, settings) => {
   const errorElement = document.querySelector(`#${input.id}-error`);
   const errorMessage = input.validationMessage;
   
   errorElement.textContent = errorMessage;
-  input.classList.add('form__input_theme_error');
+  input.classList.add(settings.inputErrorClass);
 }
 
-const hideError = (input) => {
+const hideError = (input, settings) => {
   const errorElement = document.querySelector(`#${input.id}-error`);
   
   errorElement.textContent = '';
-  input.classList.remove('form__input_theme_error');
+  input.classList.remove(settings.inputErrorClass);
 }
 
 // toggle button state function
-const toggleButtonState = (inputs, button) => {
+const toggleButtonState = (inputs, button, settings) => {
   const isValid = inputs.every( input => input.validity.valid );
 
   if (isValid) {
     button.disabled = false;
-    button.classList.remove('.form__save-button_disabled');
+    button.classList.remove(settings.inactiveButtonClass);
   }
   else {
     button.disabled = 'disabled';
-    button.classList.add('.form__save-button_disabled');
+    button.classList.add(settings.inactiveButtonClass);
   }
 }
 
 // check validity function
-const checkValidity = (input) => {
+const checkValidity = (input, settings) => {
   if (input.validity.valid) {
-    hideError(input);
+    hideError(input, settings);
   }
   else {
-    showError(input);
+    showError(input, settings);
   }
 }
 
 // enable validation function
 const enableValidation = (settings) => {
-    const forms = [...document.querySelectorAll('.form')];
+    const forms = [...document.querySelectorAll(settings.formSelector)];
 
     console.log(forms);
 
@@ -49,33 +49,25 @@ const enableValidation = (settings) => {
         evt.preventDefault();
       });
 
-      const inputs = [...form.querySelectorAll('.form__input')];
-      const button = form.querySelector('.form__save-button');
+      const inputs = [...form.querySelectorAll(settings.inputSelector)];
+      const button = form.querySelector(settings.submitButtonSelector);
 
       inputs.forEach( input => {
         input.addEventListener('input', () => {
-          checkValidity(input);
-          toggleButtonState(inputs, button);
+          checkValidity(input, settings);
+          toggleButtonState(inputs, button, settings);
         });
       });
     });
-
-    // find all forms
-      // prevent their default behaivor
-      // search for all inputs inside the form
-        // subscribe to his change
-          // check if input is valid
-          // if its valid active button
-            //  if no => show error => default browser message for input
 }
 
 // settings list
 const config = {
-    formSelector: ".popup__form",
-    inputSelector: ".popup__input",
-    submitButtonSelector: ".popup__button",
-    inactiveButtonClass: "popup__button_disabled",
-    inputErrorClass: "popup__input_type_error",
+    formSelector: '.form',
+    inputSelector: '.form__input',
+    submitButtonSelector: '.form__save-button',
+    inactiveButtonClass: 'form__save-button_disabled',
+    inputErrorClass: 'form__input_theme_error',
     errorClass: "popup__error_visible"
   };
 
