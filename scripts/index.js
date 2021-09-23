@@ -30,6 +30,7 @@ const cardItem = document.querySelector('.card-template').content.querySelector(
 const cardsContainer = document.querySelector('.elements');
 
 // modals
+const modals = [...document.querySelectorAll('.popup')];
 const editProfileModal = document.querySelector('.popup_type_edit-profile');
 const addCardModal = document.querySelector('.popup_type_add-card');
 const imageModal = document.querySelector('.popup_type_image');
@@ -60,9 +61,34 @@ const imageModalCaption = document.querySelector('.popup__caption');
 
 // functions
 // -----
+// close popup by pressing 'escape'
+function modalKeyClose(evt) {
+  if (evt.key === 'Escape') {
+    modals.forEach( modal => {
+      modal.classList.remove('popup_opened');
+    });
+  }
+}
+
+// modal close when clicking outside the popup
+function modalClickOutside(evt) {
+  modals.forEach( modal => {
+    if (evt.target.classList.contains('popup')) {
+      document.addEventListener('click', () => {
+        modal.classList.remove('popup_opened');
+      })
+    }
+  });
+}
+
 // modal toggle function
 function toggleModal(modal) {
     modal.classList.toggle('popup_opened');
+
+    if (modal.classList.contains('popup_opened')) {
+      document.addEventListener('keydown', modalKeyClose)
+      document.addEventListener('click', modalClickOutside);
+    }
 }
 
 // handle form submit function

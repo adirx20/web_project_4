@@ -1,3 +1,15 @@
+// settings list
+const config = {
+  formSelector: '.form',
+  inputSelector: '.form__input',
+  submitButtonSelector: '.form__save-button',
+  inactiveButtonClass: 'form__save-button_disabled',
+  inputErrorClass: 'form__input_theme_error',
+  errorClass: "popup__error_visible"
+};
+
+// functions
+// -----
 // show and hide error functions
 const showError = (input, settings) => {
   const errorElement = document.querySelector(`#${input.id}-error`);
@@ -42,8 +54,6 @@ const checkValidity = (input, settings) => {
 const enableValidation = (settings) => {
     const forms = [...document.querySelectorAll(settings.formSelector)];
 
-    console.log(forms);
-
     forms.forEach( form => {
       form.addEventListener('submit', evt => {
         evt.preventDefault();
@@ -61,14 +71,6 @@ const enableValidation = (settings) => {
     });
 }
 
-// settings list
-const config = {
-    formSelector: '.form',
-    inputSelector: '.form__input',
-    submitButtonSelector: '.form__save-button',
-    inactiveButtonClass: 'form__save-button_disabled',
-    inputErrorClass: 'form__input_theme_error',
-    errorClass: "popup__error_visible"
-  };
+
 
   enableValidation(config);
