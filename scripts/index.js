@@ -55,6 +55,10 @@ const editProfileForm = editProfileModal.querySelector('.form');
 const addCardForm = addCardModal.querySelector('.form');
 const formElement = document.querySelector('.form');
 
+// profile modal elements
+const profileNameElement = document.querySelector('.profile__name');
+const profileJobElement = document.querySelector('.profile__profession');
+
 // image modal elements
 const imageModalImage = document.querySelector('.popup__image');
 const imageModalCaption = document.querySelector('.popup__caption');
@@ -64,9 +68,8 @@ const imageModalCaption = document.querySelector('.popup__caption');
 // close popup by pressing 'escape'
 function modalKeyClose(evt) {
   if (evt.key === 'Escape') {
-    modals.forEach( modal => {
-      modal.classList.remove('popup_opened');
-    });
+    const popup = document.querySelector('.popup_opened');
+    closeModal(popup);
   }
 }
 
@@ -75,32 +78,36 @@ function modalClickOutside(evt) {
   modals.forEach( modal => {
     if (evt.target.classList.contains('popup')) {
       document.addEventListener('click', () => {
-        modal.classList.remove('popup_opened');
+        closeModal(modal);
       })
     }
   });
 }
 
-// modal toggle function
-function toggleModal(modal) {
-    modal.classList.toggle('popup_opened');
+// open modal function
+function openModal(modal) {
+  modal.classList.add('popup_opened');
 
-    if (modal.classList.contains('popup_opened')) {
-      document.addEventListener('keydown', modalKeyClose)
-      document.addEventListener('click', modalClickOutside);
-    }
+  document.addEventListener('keydown', modalKeyClose);
+  document.addEventListener('click', modalClickOutside);
+}
+
+// close modal function
+function closeModal(modal) {
+  modal.classList.remove('popup_opened');
+
+  document.removeEventListener('keydown', modalKeyClose);
+  document.removeEventListener('click', modalClickOutside);
 }
 
 // handle form submit function
 function handleFormSubmit(evt) {
   evt.preventDefault();
-
-  const name = document.querySelector('.profile__name');
-  const job = document.querySelector('.profile__profession');
   
-  name.textContent = profileNameInput.value;
-  job.textContent = profileJobInput.value;
-  toggleModal(editProfileModal);
+  profileNameElement.textContent = profileNameInput.value;
+  profileJobElement.textContent = profileJobInput.value;
+
+  closeModal(editProfileModal);
 }
 
 // generate cards function
@@ -124,13 +131,13 @@ function generateCard(cardData) {
   });
 
   image.addEventListener('click', () => {
-    toggleModal(imageModal);
+    openModal(imageModal);
 
     imageModalImage.src = cardData.link;
     imageModalCaption.textContent = cardData.name;
   });
 
-  cardsContainer.append(cardElement);
+  cardsContainer.prepend(cardElement);
 };
 
 // 'edit profile' modal event listeners
@@ -140,11 +147,11 @@ editProfileButton.addEventListener('click', () => {
 
     profileNameInput.value = name.textContent;
     profileJobInput.value = job.textContent;
-    toggleModal(editProfileModal);
+    openModal(editProfileModal);
 });
 
 editProfileModalCloseButton.addEventListener('click', () => {
-    toggleModal(editProfileModal);
+    closeModal(editProfileModal);
 });
 
 formElement.addEventListener('submit', handleFormSubmit);
@@ -152,11 +159,11 @@ formElement.addEventListener('submit', handleFormSubmit);
 // 'add card' modal event listeners
 addCardButton.addEventListener('click', () => {
     addCardForm.reset();
-    toggleModal(addCardModal);
+    openModal(addCardModal);
 });
 
 addCardModalCloseButton.addEventListener('click', () => {
-    toggleModal(addCardModal);
+    closeModal(addCardModal);
 });
 
 addCardForm.addEventListener('submit', (evt) => {
@@ -164,12 +171,12 @@ addCardForm.addEventListener('submit', (evt) => {
 
     generateCard({name: cardTitleInput.value, link: cardLinkInput.value});
 
-    toggleModal(addCardModal);
+    closeModal(addCardModal);
 })
 
 // 'image' modal event listeners
 imageModalCloseButton.addEventListener('click', () => {
-  toggleModal(imageModal);
+  closeModal(imageModal);
 });
 
 // generate cards
