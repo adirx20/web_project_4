@@ -75,13 +75,9 @@ function modalKeyClose(evt) {
 
 // modal close when clicking outside the popup
 function modalClickOutside(evt) {
-  modals.forEach( modal => {
-    if (evt.target.classList.contains('popup')) {
-      document.addEventListener('click', () => {
-        closeModal(modal);
-      })
-    }
-  });
+  if (evt.target.classList.contains('popup')) {
+    closeModal(evt.target);
+  }
 }
 
 // open modal function
@@ -89,7 +85,7 @@ function openModal(modal) {
   modal.classList.add('popup_opened');
 
   document.addEventListener('keydown', modalKeyClose);
-  document.addEventListener('click', modalClickOutside);
+  modal.addEventListener('click', modalClickOutside);
 }
 
 // close modal function
@@ -97,7 +93,7 @@ function closeModal(modal) {
   modal.classList.remove('popup_opened');
 
   document.removeEventListener('keydown', modalKeyClose);
-  document.removeEventListener('click', modalClickOutside);
+  modal.removeEventListener('click', modalClickOutside);
 }
 
 // handle form submit function
