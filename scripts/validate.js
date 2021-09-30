@@ -1,5 +1,5 @@
 // settings list
-const config = {
+const settings = {
   formSelector: '.form',
   inputSelector: '.form__input',
   submitButtonSelector: '.form__save-button',
@@ -14,21 +14,21 @@ const config = {
 const showError = (input, settings) => {
   const errorElement = document.querySelector(`#${input.id}-error`);
   const errorMessage = input.validationMessage;
-  
+
   errorElement.textContent = errorMessage;
   input.classList.add(settings.inputErrorClass);
 }
 
 const hideError = (input, settings) => {
   const errorElement = document.querySelector(`#${input.id}-error`);
-  
+
   errorElement.textContent = '';
   input.classList.remove(settings.inputErrorClass);
 }
 
 // toggle button state function
 const toggleButtonState = (inputs, button, settings) => {
-  const isValid = inputs.every( input => input.validity.valid );
+  const isValid = inputs.every(input => input.validity.valid);
 
   if (isValid) {
     button.disabled = false;
@@ -52,27 +52,27 @@ const checkValidity = (input, settings) => {
 
 // enable validation function
 const enableValidation = (settings) => {
-    const forms = [...document.querySelectorAll(settings.formSelector)];
+  const forms = [...document.querySelectorAll(settings.formSelector)];
 
-    forms.forEach( form => {
-      form.addEventListener('submit', evt => {
-        evt.preventDefault();
-      });
+  forms.forEach(form => {
+    form.addEventListener('submit', evt => {
+      evt.preventDefault();
+    });
 
-      const inputs = [...form.querySelectorAll(settings.inputSelector)];
-      const button = form.querySelector(settings.submitButtonSelector);
-      
-      toggleButtonState(inputs, button, settings);
-      
-      inputs.forEach( input => {
-        input.addEventListener('input', () => {
-          checkValidity(input, settings);
-          toggleButtonState(inputs, button, settings);
-        });
+    const inputs = [...form.querySelectorAll(settings.inputSelector)];
+    const button = form.querySelector(settings.submitButtonSelector);
+
+    toggleButtonState(inputs, button, settings);
+
+    inputs.forEach(input => {
+      input.addEventListener('input', () => {
+        checkValidity(input, settings);
+        toggleButtonState(inputs, button, settings);
       });
     });
+  });
 }
 
 
 
-  enableValidation(config);
+enableValidation(settings);
