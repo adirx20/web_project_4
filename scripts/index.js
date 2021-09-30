@@ -1,3 +1,15 @@
+import FormValidator from './FormValidator.js';
+
+// -----
+settings
+const settings = {
+    inputSelector: '.form__input',
+    submitButtonSelector: '.form__save-button',
+    inactiveButtonClass: 'form__save-button_disabled',
+    inputErrorClass: 'form__input_theme_error',
+    errorClass: "popup__error_visible"
+};
+
 // cards
 const initialCards = [
     {
@@ -62,6 +74,14 @@ const profileJobElement = document.querySelector('.profile__profession');
 // image modal elements
 const imageModalImage = document.querySelector('.popup__image');
 const imageModalCaption = document.querySelector('.popup__caption');
+
+// validators
+const editProfileFormValidator = new FormValidator(settings, editProfileForm);
+const addCardFormValidator = new FormValidator(settings, addCardForm);
+
+// call forms validation
+editProfileFormValidator.enableValidation();
+addCardFormValidator.enableValidation();
 
 // functions
 // -----
