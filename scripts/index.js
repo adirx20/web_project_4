@@ -1,42 +1,42 @@
 import FormValidator from './FormValidator.js';
 
 // -----
-settings
+// settings
 const settings = {
-    inputSelector: '.form__input',
-    submitButtonSelector: '.form__save-button',
-    inactiveButtonClass: 'form__save-button_disabled',
-    inputErrorClass: 'form__input_theme_error',
-    errorClass: "popup__error_visible"
+  inputSelector: '.form__input',
+  submitButtonSelector: '.form__save-button',
+  inactiveButtonClass: 'form__save-button_disabled',
+  inputErrorClass: 'form__input_theme_error',
+  errorClass: "popup__error_visible"
 };
 
 // cards
 const initialCards = [
-    {
-      name: "Yosemite Valley",
-      link: "https://code.s3.yandex.net/web-code/yosemite.jpg"
-    },
-    {
-      name: "Lake Louise",
-      link: "https://code.s3.yandex.net/web-code/lake-louise.jpg"
-    },
-    {
-      name: "Bald Mountains",
-      link: "https://code.s3.yandex.net/web-code/bald-mountains.jpg"
-    },
-    {
-      name: "Latemar",
-      link: "https://code.s3.yandex.net/web-code/latemar.jpg"
-    },
-    {
-      name: "Vanoise National Park",
-      link: "https://code.s3.yandex.net/web-code/vanoise.jpg"
-    },
-    {
-      name: "Lago di Braies",
-      link: "https://code.s3.yandex.net/web-code/lago.jpg"
-    }
-  ];
+  {
+    name: "Yosemite Valley",
+    link: "https://code.s3.yandex.net/web-code/yosemite.jpg"
+  },
+  {
+    name: "Lake Louise",
+    link: "https://code.s3.yandex.net/web-code/lake-louise.jpg"
+  },
+  {
+    name: "Bald Mountains",
+    link: "https://code.s3.yandex.net/web-code/bald-mountains.jpg"
+  },
+  {
+    name: "Latemar",
+    link: "https://code.s3.yandex.net/web-code/latemar.jpg"
+  },
+  {
+    name: "Vanoise National Park",
+    link: "https://code.s3.yandex.net/web-code/vanoise.jpg"
+  },
+  {
+    name: "Lago di Braies",
+    link: "https://code.s3.yandex.net/web-code/lago.jpg"
+  }
+];
 
 const cardItem = document.querySelector('.card-template').content.querySelector('.element');
 const cardsContainer = document.querySelector('.elements');
@@ -119,7 +119,7 @@ function closeModal(modal) {
 // handle form submit function
 function handleFormSubmit(evt) {
   evt.preventDefault();
-  
+
   profileNameElement.textContent = profileNameInput.value;
   profileJobElement.textContent = profileJobInput.value;
 
@@ -139,11 +139,11 @@ function generateCard(cardData) {
   image.style.backgroundImage = `url(${cardData.link})`;
 
   likeButton.addEventListener('click', () => {
-      likeButton.classList.toggle('element__like-button_active');
+    likeButton.classList.toggle('element__like-button_active');
   });
 
   deleteButton.addEventListener('click', () => {
-      cardElement.remove();
+    cardElement.remove();
   });
 
   image.addEventListener('click', () => {
@@ -157,37 +157,47 @@ function generateCard(cardData) {
 };
 
 // 'edit profile' modal event listeners
+// open modal
 editProfileButton.addEventListener('click', () => {
-    const name = document.querySelector('.profile__name');
-    const job = document.querySelector('.profile__profession');
+  // editProfileFormValidator.resetValidation();
+  editProfileFormValidator.enableValidation();
 
-    profileNameInput.value = name.textContent;
-    profileJobInput.value = job.textContent;
-    openModal(editProfileModal);
+  const name = document.querySelector('.profile__name');
+  const job = document.querySelector('.profile__profession');
+
+  profileNameInput.value = name.textContent;
+  profileJobInput.value = job.textContent;
+  openModal(editProfileModal);
 });
 
+// close modal
 editProfileModalCloseButton.addEventListener('click', () => {
-    closeModal(editProfileModal);
+  closeModal(editProfileModal);
 });
 
+// submit form
 formElement.addEventListener('submit', handleFormSubmit);
 
 // 'add card' modal event listeners
+// open
 addCardButton.addEventListener('click', () => {
-    addCardForm.reset();
-    openModal(addCardModal);
+  addCardFormValidator.resetValidation();
+
+  openModal(addCardModal);
 });
 
+// close
 addCardModalCloseButton.addEventListener('click', () => {
-    closeModal(addCardModal);
+  closeModal(addCardModal);
 });
 
+// submit form
 addCardForm.addEventListener('submit', (evt) => {
-    evt.preventDefault();
+  evt.preventDefault();
 
-    generateCard({name: cardTitleInput.value, link: cardLinkInput.value});
+  generateCard({ name: cardTitleInput.value, link: cardLinkInput.value });
 
-    closeModal(addCardModal);
+  closeModal(addCardModal);
 })
 
 // 'image' modal event listeners
@@ -197,3 +207,6 @@ imageModalCloseButton.addEventListener('click', () => {
 
 // generate cards
 initialCards.forEach(generateCard);
+
+editProfileFormValidator.enableValidation();
+console.log(editProfileFormValidator._isValid);
