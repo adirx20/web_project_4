@@ -1,13 +1,13 @@
 class FormValidator {
     constructor(settings, formElement) {
-        this.settings = settings;
-        this.formElement = formElement;
+        this._settings = settings;
+        this._formElement = formElement;
     }
 
     _showError = (inputElement) => {
-        const { inputErrorClass } = this.settings;
+        const { inputErrorClass } = this._settings;
 
-        const errorElement = this.formElement.querySelector(`#${inputElement.id}-error`);
+        const errorElement = this._formElement.querySelector(`#${inputElement.id}-error`);
         const errorMessage = inputElement.validationMessage;
 
         errorElement.textContent = errorMessage;
@@ -15,9 +15,9 @@ class FormValidator {
     }
 
     _hideError = (inputElement) => {
-        const { inputErrorClass } = this.settings;
+        const { inputErrorClass } = this._settings;
 
-        const errorElement = this.formElement.querySelector(`#${inputElement.id}-error`);
+        const errorElement = this._formElement.querySelector(`#${inputElement.id}-error`);
 
         errorElement.textContent = '';
         inputElement.classList.remove(inputErrorClass);
@@ -33,11 +33,11 @@ class FormValidator {
     }
 
     _toggleButtonState = () => {
-        const { inactiveButtonClass, submitButtonSelector } = this.settings;
+        const { inactiveButtonClass, submitButtonSelector } = this._settings;
 
-        const buttonElement = this.formElement.querySelector(submitButtonSelector);
+        const buttonElement = this._formElement.querySelector(submitButtonSelector);
 
-        if (this._isValid) {
+        if (this._isValid()) {
             buttonElement.disabled = false;
             buttonElement.classList.remove(inactiveButtonClass);
         }
@@ -50,9 +50,9 @@ class FormValidator {
     _isValid = () => this.inputList.every(inputElement => inputElement.validity.valid);
 
     _setEventListeners = () => {
-        const { inputSelector } = this.settings;
+        const { inputSelector } = this._settings;
 
-        this.inputList = [...this.formElement.querySelectorAll(inputSelector)];
+        this.inputList = [...this._formElement.querySelectorAll(inputSelector)];
 
         this.inputList.forEach(inputElement => {
             inputElement.addEventListener('input', () => {
@@ -72,7 +72,7 @@ class FormValidator {
     }
 
     enableValidation = () => {
-        this.formElement.addEventListener('submit', evt => {
+        this._formElement.addEventListener('submit', evt => {
             evt.preventDefault();
         });
 
@@ -81,21 +81,3 @@ class FormValidator {
 }
 
 export default FormValidator;
-
-
-
-// const settings = {
-//     inputSelector: '.form__input',
-//     submitButtonSelector: '.form__save-button',
-//     inactiveButtonClass: 'form__save-button_disabled',
-//     inputErrorClass: 'form__input_theme_error',
-//     errorClass: "popup__error_visible"
-// };
-
-// const formElement = document.querySelector('.form');
-
-// const editForm = document.querySelector('.form');
-// const addCardForm = document.querySelector('.form');
-
-// const editFormValidator = new FormValidator(settings, formElement);
-// const addCardFormValidator = new FormValidator(settings, formElement);

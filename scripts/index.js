@@ -1,4 +1,8 @@
 import FormValidator from './FormValidator.js';
+import { Card } from './Card.js';
+
+
+
 
 // -----
 // settings
@@ -126,41 +130,32 @@ function handleFormSubmit(evt) {
   closeModal(editProfileModal);
 }
 
-// generate cards function
-function generateCard(cardData) {
-  const cardElement = cardItem.cloneNode(true);
+// render card function
+const cardTemplateSelector = '.card-template';
 
-  const title = cardElement.querySelector('.element__title');
-  const image = cardElement.querySelector('.element__image');
-  const deleteButton = cardElement.querySelector('.element__delete-button');
-  const likeButton = cardElement.querySelector('.element__like-button');
+function renderCard(cardData, cardsContainer) {
+  const cardElement = new Card(cardData, cardTemplateSelector);
 
-  title.textContent = cardData.name;
-  image.style.backgroundImage = `url(${cardData.link})`;
+  cardsContainer.prepend(cardElement.getCardElement());
+}
 
-  likeButton.addEventListener('click', () => {
-    likeButton.classList.toggle('element__like-button_active');
-  });
+// 'add card' submit handler function
+function addCardSubmitHandler(evt) {
+  evt.preventDefault();
 
-  deleteButton.addEventListener('click', () => {
-    cardElement.remove();
-  });
+  renderCard({
+    name: cardTitleInput.value,
+    link: cardLinkInput.value
+  }, cardsContainer);
 
-  image.addEventListener('click', () => {
-    openModal(imageModal);
-
-    imageModalImage.src = cardData.link;
-    imageModalCaption.textContent = cardData.name;
-  });
-
-  cardsContainer.prepend(cardElement);
-};
+  closeModal(addCardModal);
+}
 
 // 'edit profile' modal event listeners
 // open modal
 editProfileButton.addEventListener('click', () => {
   // editProfileFormValidator.resetValidation();
-  editProfileFormValidator.enableValidation();
+  editProfileFormValidator.resetValidation();
 
   const name = document.querySelector('.profile__name');
   const job = document.querySelector('.profile__profession');
@@ -192,13 +187,7 @@ addCardModalCloseButton.addEventListener('click', () => {
 });
 
 // submit form
-addCardForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-
-  generateCard({ name: cardTitleInput.value, link: cardLinkInput.value });
-
-  closeModal(addCardModal);
-})
+addCardForm.addEventListener('submit', addCardSubmitHandler);
 
 // 'image' modal event listeners
 imageModalCloseButton.addEventListener('click', () => {
@@ -206,7 +195,7 @@ imageModalCloseButton.addEventListener('click', () => {
 });
 
 // generate cards
-initialCards.forEach(generateCard);
+initialCards.forEach(card => renderCard(card, cardsContainer));
 
 editProfileFormValidator.enableValidation();
-console.log(editProfileFormValidator._isValid);
+addCardFormValidator.enableValidation();
