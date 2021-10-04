@@ -32,4 +32,4 @@ function modalClickOutside(evt) {
 
 
 
-export { imageModal, imageModalImage, imageModalCaption, openModal };
+export { imageModal, imageModalImage, imageModalCaption, openModal, closeModal, modalKeyClose, modalClickOutside };

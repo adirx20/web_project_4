@@ -1,5 +1,6 @@
 import FormValidator from './FormValidator.js';
 import { Card } from './Card.js';
+import { openModal, closeModal, modalKeyClose, modalClickOutside } from './utils.js';
 
 
 
@@ -89,39 +90,8 @@ addCardFormValidator.enableValidation();
 
 // functions
 // -----
-// close popup by pressing 'escape'
-function modalKeyClose(evt) {
-  if (evt.key === 'Escape') {
-    const popup = document.querySelector('.popup_opened');
-    closeModal(popup);
-  }
-}
-
-// modal close when clicking outside the popup
-function modalClickOutside(evt) {
-  if (evt.target.classList.contains('popup')) {
-    closeModal(evt.target);
-  }
-}
-
-// open modal function
-function openModal(modal) {
-  modal.classList.add('popup_opened');
-
-  document.addEventListener('keydown', modalKeyClose);
-  modal.addEventListener('click', modalClickOutside);
-}
-
-// close modal function
-function closeModal(modal) {
-  modal.classList.remove('popup_opened');
-
-  document.removeEventListener('keydown', modalKeyClose);
-  modal.removeEventListener('click', modalClickOutside);
-}
-
 // handle form submit function
-function handleFormSubmit(evt) {
+const handleFormSubmit = (evt) => {
   evt.preventDefault();
 
   profileNameElement.textContent = profileNameInput.value;
@@ -130,17 +100,23 @@ function handleFormSubmit(evt) {
   closeModal(editProfileModal);
 }
 
-// render card function
+// 'create card' and 'render card' functions
 const cardTemplateSelector = '.card-template';
 
-function renderCard(cardData, cardsContainer) {
-  const cardElement = new Card(cardData, cardTemplateSelector);
+const createCard = (cardData) => {
+  const card = new Card(cardData, cardTemplateSelector);
 
-  cardsContainer.prepend(cardElement.getCardElement());
+  return card.getCardElement();
+}
+
+const renderCard = (cardData) => {
+  const cardElement = createCard(cardData);
+
+  cardsContainer.prepend(cardElement);
 }
 
 // 'add card' submit handler function
-function addCardSubmitHandler(evt) {
+const addCardSubmitHandler = (evt) => {
   evt.preventDefault();
 
   renderCard({
@@ -176,6 +152,8 @@ formElement.addEventListener('submit', handleFormSubmit);
 // 'add card' modal event listeners
 // open
 addCardButton.addEventListener('click', () => {
+  addCardForm.reset();
+
   addCardFormValidator.resetValidation();
 
   openModal(addCardModal);
@@ -196,6 +174,3 @@ imageModalCloseButton.addEventListener('click', () => {
 
 // generate cards
 initialCards.forEach(card => renderCard(card, cardsContainer));
-
-editProfileFormValidator.enableValidation();
-addCardFormValidator.enableValidation();
