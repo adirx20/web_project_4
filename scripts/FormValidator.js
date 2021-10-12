@@ -49,7 +49,7 @@ class FormValidator {
 
     _setEventListeners = () => {
         const { inputSelector, submitButtonSelector } = this._settings;
-        
+
         this._buttonElement = this._formElement.querySelector(submitButtonSelector);
         this.inputList = [...this._formElement.querySelectorAll(inputSelector)];
 
@@ -78,4 +78,4 @@ class FormValidator {
     }
 }
 
-export default FormValidator;                                                                                                                                                                
+export default FormValidator;
