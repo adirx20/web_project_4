@@ -8,5 +8,7 @@ class PopupWithImage extends Popup {
 
         imageElement.src = link;
         captionElement.textContent = text;
+
+        super.open();
     }
 }

@@ -20,7 +20,11 @@ class Popup {
     }
 
     setEventListeners = () => {
-        this._popupElement.querySelector('.popup__close-button').addEventListener('click', this.close);
+        this._popupElement.querySelector('.popup').addEventListener('click', (evt) => {
+            if (evt.classList.contains('popup__close-button')) {
+                this.close();
+            }
+        });
     }
 }
 
