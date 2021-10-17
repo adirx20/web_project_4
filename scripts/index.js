@@ -1,6 +1,8 @@
 import FormValidator from './FormValidator.js';
 import { Card } from './Card.js';
 import { openModal, closeModal, modalKeyClose, modalClickOutside } from './utils.js';
+import { PopupWithImage } from './PopupWithImage.js';
+import PopupWithForm from './PopupWithForm.js';
 
 
 
@@ -50,7 +52,7 @@ const cardsContainer = document.querySelector('.elements');
 const modals = [...document.querySelectorAll('.popup')];
 const editProfileModal = document.querySelector('.popup_type_edit-profile');
 const addCardModal = document.querySelector('.popup_type_add-card');
-const imageModal = document.querySelector('.popup_type_image');
+// const imageModal = document.querySelector('.popup_type_image');
 
 // close buttons
 const editProfileModalCloseButton = editProfileModal.querySelector('.popup__close-button');
@@ -101,10 +103,18 @@ const handleFormSubmit = (evt) => {
 }
 
 // 'create card' and 'render card' functions
+
+
 const cardTemplateSelector = '.card-template';
 
+const imageModal = new PopupWithImage('.popup_type_image');
+const addCardModal = new PopupWithForm('.popup_type_add-card');
+const editProfileModal = new PopupWithForm('.popup_type_edit-profile');
+
 const createCard = (cardData) => {
-  const card = new Card(cardData, cardTemplateSelector);
+  const card = new Card(cardData, cardTemplateSelector, () => {
+imageModal.open()
+  });
 
   return card.getCardElement();
 }

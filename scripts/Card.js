@@ -3,10 +3,11 @@ import { imageModal, imageModalImage, imageModalCaption, openModal } from './uti
 
 
 class Card {
-    constructor({ name, link }, templateCardSelector) {
+    constructor({ name, link }, templateCardSelector, handleCardClick) {
         this._name = name;
         this._link = link;
         this._templateCardSelector = templateCardSelector;
+        this._handleCardClick = handleCardClick;
 
         this._cardTemplate = document.querySelector(templateCardSelector)
             .content.querySelector('.element');
@@ -28,9 +29,9 @@ class Card {
         const deleteButton = this._cardElement.querySelector('.element__delete-button');
         this._likeButton = this._cardElement.querySelector('.element__like-button');
 
-        this._likeButton.addEventListener('click', this._handleLikeIcon);
-        deleteButton.addEventListener('click', this._handleDeleteIcon);
-        image.addEventListener('click', this._handlePreviewPicture);
+        this._likeButton.addEventListener('click', () => this._handleLikeIcon());
+        deleteButton.addEventListener('click', () => this._handleDeleteIcon());
+        image.addEventListener('click', () => this._handleCardClick());
     }
 
     getCardElement = () => {
