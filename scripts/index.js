@@ -50,8 +50,8 @@ const cardsContainer = document.querySelector('.elements');
 
 // modals
 const modals = [...document.querySelectorAll('.popup')];
-const editProfileModal = document.querySelector('.popup_type_edit-profile');
-const addCardModal = document.querySelector('.popup_type_add-card');
+// const editProfileModal = document.querySelector('.popup_type_edit-profile');
+// const addCardModal = document.querySelector('.popup_type_add-card');
 // const imageModal = document.querySelector('.popup_type_image');
 
 // close buttons
@@ -108,12 +108,16 @@ const handleFormSubmit = (evt) => {
 const cardTemplateSelector = '.card-template';
 
 const imageModal = new PopupWithImage('.popup_type_image');
-const addCardModal = new PopupWithForm('.popup_type_add-card');
-const editProfileModal = new PopupWithForm('.popup_type_edit-profile');
+const addCardModal = new PopupWithForm('.popup_type_add-card', () => {});
+const editProfileModal = new PopupWithForm('.popup_type_edit-profile', () => {});
+
+imageModal.setEventListeners();
+addCardModal.setEventListeners();
+editProfileModal.setEventListeners();
 
 const createCard = (cardData) => {
   const card = new Card(cardData, cardTemplateSelector, () => {
-imageModal.open()
+    imageModal.open(cardData.link, cardData.name);
   });
 
   return card.getCardElement();
