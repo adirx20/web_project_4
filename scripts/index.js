@@ -2,7 +2,7 @@ import FormValidator from './FormValidator.js';
 import { Card } from './Card.js';
 import { openModal, closeModal, modalKeyClose, modalClickOutside } from './utils.js';
 import { PopupWithImage } from './PopupWithImage.js';
-import PopupWithForm from './PopupWithForm.js';
+import { PopupWithForm } from './PopupWithForm.js';
 
 
 

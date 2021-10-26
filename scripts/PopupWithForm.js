@@ -30,12 +30,12 @@ class PopupWithForm extends Popup {
     }
 }
 
-const profileName = '';
-const profileJob = '';
+// const profileName = '';
+// const profileJob = '';
 
-const editProfileModal = new PopupWithForm('.popup_type_edit-profile', (data) => {
-    profileName.textContent = data.name;
-    profileJob.textContent = data.profession;
-});
+// const editProfileModal = new PopupWithForm('.popup_type_edit-profile', (data) => {
+//     profileName.textContent = data.name;
+//     profileJob.textContent = data.profession;
+// });
 
-export default PopupWithForm;
+export { PopupWithForm };
