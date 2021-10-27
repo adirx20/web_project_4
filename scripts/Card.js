@@ -3,9 +3,9 @@ import { imageModal, imageModalImage, imageModalCaption, openModal } from './uti
 
 
 class Card {
-    constructor({ name, link }, templateCardSelector, handleCardClick) {
-        this._name = name;
-        this._link = link;
+    constructor(data, templateCardSelector, handleCardClick) {
+        this._name = data.name;
+        this._link = data.link;
         this._templateCardSelector = templateCardSelector;
         this._handleCardClick = handleCardClick;
 
