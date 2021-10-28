@@ -4,6 +4,8 @@ import { openModal, closeModal, modalKeyClose, modalClickOutside } from './utils
 import { PopupWithImage } from './PopupWithImage.js';
 import { PopupWithForm } from './PopupWithForm.js';
 
+const imageModal = new PopupWithImage('.popup_type_image');
+imageModal.setEventListeners();
 
 
 
@@ -50,28 +52,28 @@ const cardsContainer = document.querySelector('.elements');
 
 // modals
 const modals = [...document.querySelectorAll('.popup')];
-// const editProfileModal = document.querySelector('.popup_type_edit-profile');
-// const addCardModal = document.querySelector('.popup_type_add-card');
-// const imageModal = document.querySelector('.popup_type_image');
+const editProfileModalSelector = document.querySelector('.popup_type_edit-profile');
+const addCardModalSelector = document.querySelector('.popup_type_add-card');
+const imageModalSelector = document.querySelector('.popup_type_image');
 
 // close buttons
-const editProfileModalCloseButton = editProfileModal.querySelector('.popup__close-button');
-const addCardModalCloseButton = addCardModal.querySelector('.popup__close-button');
-const imageModalCloseButton = imageModal.querySelector('.popup__close-button');
+const editProfileModalCloseButton = editProfileModalSelector.querySelector('.popup__close-button');
+const addCardModalCloseButton = addCardModalSelector.querySelector('.popup__close-button');
+const imageModalCloseButton = imageModalSelector.querySelector('.popup__close-button');
 
 // open buttons
 const editProfileButton = document.querySelector('.profile__edit-button');
 const addCardButton = document.querySelector('.profile__add-button');
 
-// inputs 
+// // inputs 
 const profileNameInput = document.querySelector('.form__input_type_name');
 const profileJobInput = document.querySelector('.form__input_type_profession');
 const cardTitleInput = document.querySelector('.form__input_type_card-title');
 const cardLinkInput = document.querySelector('.form__input_type_card-link');
 
 // forms
-const editProfileForm = editProfileModal.querySelector('.form');
-const addCardForm = addCardModal.querySelector('.form');
+const editProfileForm = editProfileModalSelector.querySelector('.form');
+const addCardForm = addCardModalSelector.querySelector('.form');
 const formElement = document.querySelector('.form');
 
 // profile modal elements
@@ -99,7 +101,7 @@ const handleFormSubmit = (evt) => {
   profileNameElement.textContent = profileNameInput.value;
   profileJobElement.textContent = profileJobInput.value;
 
-  closeModal(editProfileModal);
+  closeModal(editProfileModalSelector);
 }
 
 // 'create card' and 'render card' functions
@@ -107,24 +109,25 @@ const handleFormSubmit = (evt) => {
 
 const cardTemplateSelector = '.card-template';
 
-const imageModal = new PopupWithImage('.popup_type_image');
-const addCardModal = new PopupWithForm('.popup_type_add-card', () => {});
-const editProfileModal = new PopupWithForm('.popup_type_edit-profile', () => {});
+// const imageModal = new PopupWithImage('.popup_type_image');
+// const addCardModal = new PopupWithForm('.popup_type_add-card', () => {});
+// const editProfileModal = new PopupWithForm('.popup_type_edit-profile', () => {});
 
 imageModal.setEventListeners();
-addCardModal.setEventListeners();
-editProfileModal.setEventListeners();
+// addCardModal.setEventListeners();
+// editProfileModal.setEventListeners();
 
-const createCard = (cardData) => {
-  const card = new Card(cardData, cardTemplateSelector, () => {
-    imageModal.open(cardData.link, cardData.name);
+const createCard = (data) => {
+  const card = new Card(data, cardTemplateSelector, (text, link) => {
+    console.log('hello hello this is', text, link);
+    imageModal.open(text, link);
   });
 
   return card.getCardElement();
 }
 
-const renderCard = (cardData) => {
-  const cardElement = createCard(cardData);
+const renderCard = (data) => {
+  const cardElement = createCard(data);
 
   cardsContainer.prepend(cardElement);
 }
@@ -136,9 +139,9 @@ const addCardSubmitHandler = (evt) => {
   renderCard({
     name: cardTitleInput.value,
     link: cardLinkInput.value
-  }, cardsContainer);
+  });
 
-  closeModal(addCardModal);
+  closeModal(addCardModalSelector);
 }
 
 // 'edit profile' modal event listeners
@@ -152,12 +155,12 @@ editProfileButton.addEventListener('click', () => {
 
   profileNameInput.value = name.textContent;
   profileJobInput.value = job.textContent;
-  openModal(editProfileModal);
+  openModal(editProfileModalSelector);
 });
 
 // close modal
 editProfileModalCloseButton.addEventListener('click', () => {
-  closeModal(editProfileModal);
+  closeModal(editProfileModalSelector);
 });
 
 // submit form
@@ -170,12 +173,12 @@ addCardButton.addEventListener('click', () => {
 
   addCardFormValidator.resetValidation();
 
-  openModal(addCardModal);
+  openModal(addCardModalSelector);
 });
 
 // close
 addCardModalCloseButton.addEventListener('click', () => {
-  closeModal(addCardModal);
+  closeModal(addCardModalSelector);
 });
 
 // submit form
@@ -187,4 +190,4 @@ imageModalCloseButton.addEventListener('click', () => {
 });
 
 // generate cards
-initialCards.forEach(card => renderCard(card, cardsContainer));
+initialCards.forEach(card => renderCard(card));

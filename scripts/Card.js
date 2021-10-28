@@ -1,10 +1,9 @@
-import { imageModal, imageModalImage, imageModalCaption, openModal } from './utils.js';
-
+import { imageModalSelector, imageModalImage, imageModalCaption, openModal } from './utils.js';
 
 
 class Card {
     constructor(data, templateCardSelector, handleCardClick) {
-        this._name = data.name;
+        this._text = data.name;
         this._link = data.link;
         this._templateCardSelector = templateCardSelector;
         this._handleCardClick = handleCardClick;
@@ -17,21 +16,21 @@ class Card {
 
     _handleDeleteIcon = () => this._cardElement.remove();
 
-    _handlePreviewPicture = () => {
-        openModal(imageModal);
+    // _handlePreviewPicture = () => {
+    //     imageModal.open(this._text, this._link);
 
-        imageModalImage.src = this._link;
-        imageModalCaption.textContent = this._name;
-    }
+    //     imageModalImage.src = this._link;
+    //     imageModalCaption.textContent = this._text;
+    // }
 
     _setEventListeners = () => {
-        const image = this._cardElement.querySelector('.element__image');
-        const deleteButton = this._cardElement.querySelector('.element__delete-button');
+        this._image = this._cardElement.querySelector('.element__image');
+        this._deleteButton = this._cardElement.querySelector('.element__delete-button');
         this._likeButton = this._cardElement.querySelector('.element__like-button');
 
         this._likeButton.addEventListener('click', () => this._handleLikeIcon());
-        deleteButton.addEventListener('click', () => this._handleDeleteIcon());
-        image.addEventListener('click', () => this._handleCardClick());
+        this._deleteButton.addEventListener('click', () => this._handleDeleteIcon());
+        this._image.addEventListener('click', () => this._handleCardClick(this._text, this._link));
     }
 
     getCardElement = () => {
@@ -40,7 +39,7 @@ class Card {
         const title = this._cardElement.querySelector('.element__title');
         const image = this._cardElement.querySelector('.element__image');
 
-        title.textContent = this._name;
+        title.textContent = this._text;
         image.style.backgroundImage = `url(${this._link})`;
 
         this._setEventListeners();
