@@ -7,6 +7,14 @@ import { PopupWithForm } from './PopupWithForm.js';
 const imageModal = new PopupWithImage('.popup_type_image');
 imageModal.setEventListeners();
 
+const editModal = new PopupWithForm('.popup_type_edit-profile', (data) => {
+  console.log('data: ', data);
+  
+  profileNameElement.textContent = data.name;
+  profileJobElement.textContent = data.profession; 
+});
+editModal.setEventListeners();
+
 
 
 // -----
@@ -94,15 +102,15 @@ addCardFormValidator.enableValidation();
 
 // functions
 // -----
-// handle form submit function
-const handleFormSubmit = (evt) => {
-  evt.preventDefault();
+// // handle form submit function
+// const handleFormSubmit = (evt) => {
+//   evt.preventDefault();
 
-  profileNameElement.textContent = profileNameInput.value;
-  profileJobElement.textContent = profileJobInput.value;
+//   profileNameElement.textContent = profileNameInput.value;
+//   profileJobElement.textContent = profileJobInput.value;
 
-  closeModal(editProfileModalSelector);
-}
+//   closeModal(editProfileModalSelector);
+// }
 
 // 'create card' and 'render card' functions
 
@@ -147,7 +155,6 @@ const addCardSubmitHandler = (evt) => {
 // 'edit profile' modal event listeners
 // open modal
 editProfileButton.addEventListener('click', () => {
-  // editProfileFormValidator.resetValidation();
   editProfileFormValidator.resetValidation();
 
   const name = document.querySelector('.profile__name');
@@ -155,7 +162,8 @@ editProfileButton.addEventListener('click', () => {
 
   profileNameInput.value = name.textContent;
   profileJobInput.value = job.textContent;
-  openModal(editProfileModalSelector);
+  // openModal(editProfileModalSelector);
+  editModal.open();
 });
 
 // close modal
@@ -163,8 +171,8 @@ editProfileModalCloseButton.addEventListener('click', () => {
   closeModal(editProfileModalSelector);
 });
 
-// submit form
-formElement.addEventListener('submit', handleFormSubmit);
+// // submit form
+// formElement.addEventListener('submit', handleFormSubmit);
 
 // 'add card' modal event listeners
 // open
@@ -184,10 +192,10 @@ addCardModalCloseButton.addEventListener('click', () => {
 // submit form
 addCardForm.addEventListener('submit', addCardSubmitHandler);
 
-// 'image' modal event listeners
-imageModalCloseButton.addEventListener('click', () => {
-  closeModal(imageModal);
-});
+// // 'image' modal event listeners
+// imageModalCloseButton.addEventListener('click', () => {
+//   closeModal(imageModal);
+// });
 
 // generate cards
 initialCards.forEach(card => renderCard(card));

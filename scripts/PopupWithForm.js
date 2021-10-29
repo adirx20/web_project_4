@@ -7,7 +7,7 @@ class PopupWithForm extends Popup {
         this._formElement = this._popupElement.querySelector('.form');
     }
 
-    _getInputValues = () => {
+    _getInputValues() {
         const inputs = [...this._formElement.querySelectorAll('.form__input')];
         const inputValues = {};
 
@@ -16,17 +16,22 @@ class PopupWithForm extends Popup {
         return inputValues;
     }
 
-    setEventListeners = () => {
+    setEventListeners() {
         super.setEventListeners();
 
-        this._formElement.addEventListener('submit', () => {
+        this._formElement.addEventListener('submit', (evt) => {
+            evt.preventDefault();
+
             this._submitHandler(this._getInputValues());
+
+            this.close();
         }
-        )
+        );
     };
 
-    close = () => {
+    close() {
         super.close();
+
         this._formElement.reset();
     }
 }
