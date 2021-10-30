@@ -8,12 +8,22 @@ const imageModal = new PopupWithImage('.popup_type_image');
 imageModal.setEventListeners();
 
 const editModal = new PopupWithForm('.popup_type_edit-profile', (data) => {
-  console.log('data: ', data);
-  
   profileNameElement.textContent = data.name;
-  profileJobElement.textContent = data.profession; 
+  profileJobElement.textContent = data.profession;
 });
 editModal.setEventListeners();
+
+const addCardModal = new PopupWithForm('.popup_type_add-card', (data) => {
+  console.log('data: ', data);
+  
+  renderCard({
+    name: data['card-title'],
+    link: data['card-link']
+  });
+  // profileNameElement.textContent = data.name;
+  // profileJobElement.textContent = data.profession;
+});
+addCardModal.setEventListeners();
 
 
 
@@ -140,17 +150,17 @@ const renderCard = (data) => {
   cardsContainer.prepend(cardElement);
 }
 
-// 'add card' submit handler function
-const addCardSubmitHandler = (evt) => {
-  evt.preventDefault();
+// // 'add card' submit handler function
+// const addCardSubmitHandler = (evt) => {
+//   evt.preventDefault();
 
-  renderCard({
-    name: cardTitleInput.value,
-    link: cardLinkInput.value
-  });
+//   renderCard({
+//     name: cardTitleInput.value,
+//     link: cardLinkInput.value
+//   });
 
-  closeModal(addCardModalSelector);
-}
+//   closeModal(addCardModalSelector);
+// }
 
 // 'edit profile' modal event listeners
 // open modal
@@ -189,8 +199,8 @@ addCardModalCloseButton.addEventListener('click', () => {
   closeModal(addCardModalSelector);
 });
 
-// submit form
-addCardForm.addEventListener('submit', addCardSubmitHandler);
+// // submit form
+// addCardForm.addEventListener('submit', addCardSubmitHandler);
 
 // // 'image' modal event listeners
 // imageModalCloseButton.addEventListener('click', () => {
