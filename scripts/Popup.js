@@ -22,7 +22,7 @@ class Popup {
     }
 
     setEventListeners() {
-        this._popupElement.querySelector('.popup__close-button').addEventListener('click', evt => this.close());
+        this._popupElement.querySelector('.popup__close-button').addEventListener('click', this.close);
     }
 }
 // =====>

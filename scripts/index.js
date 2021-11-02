@@ -60,9 +60,9 @@ const profileJobInput = document.querySelector('.form__input_type_profession');
 const editProfileForm = editProfileModalSelector.querySelector('.form');
 const addCardForm = addCardModalSelector.querySelector('.form');
 
-// PROFILE MODAL ELEMENTS
-const profileNameElement = document.querySelector('.profile__name');
-const profileJobElement = document.querySelector('.profile__profession');
+// // PROFILE MODAL ELEMENTS
+// const profileNameElement = document.querySelector('.profile__name');
+// const profileJobElement = document.querySelector('.profile__profession');
 
 // VALIDATORS
 const editProfileFormValidator = new FormValidator(settings, editProfileForm);
@@ -82,11 +82,7 @@ const userInfo = new UserInfo({
 const imageModal = new PopupWithImage('.popup_type_image');
 imageModal.setEventListeners();
 
-const editProfileModal = new PopupWithForm('.popup_type_edit-profile', (data) => {
-  // profileNameElement.textContent = data.name;
-  // profileJobElement.textContent = data.profession;
-  userInfo.setUserInfo(data);
-});
+const editProfileModal = new PopupWithForm('.popup_type_edit-profile', data => userInfo.setUserInfo(data));
 editProfileModal.setEventListeners();
 
 const addCardModal = new PopupWithForm('.popup_type_add-card', (data) => {
@@ -118,12 +114,12 @@ const renderCard = (data) => {
 // EDIT PROFILE
 editProfileButton.addEventListener('click', () => {
   editProfileFormValidator.resetValidation();
+const userData = userInfo.getUserInfo();
+  // const name = document.querySelector('.profile__name');
+  // const job = document.querySelector('.profile__profession'); ==================================================LAST SESSION==============================
 
-  const name = document.querySelector('.profile__name');
-  const job = document.querySelector('.profile__profession');
-
-  profileNameInput.value = name.textContent;
-  profileJobInput.value = job.textContent;
+  profileNameInput.value = userData.name;
+  profileJobInput.value = userData.job;
 
   editProfileModal.open();
 });
