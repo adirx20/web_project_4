@@ -1,5 +1,6 @@
 import { Popup } from './Popup.js';
 
+// =====>
 class PopupWithForm extends Popup {
     constructor(popupSelector, submitHandler) {
         super(popupSelector);
@@ -35,13 +36,6 @@ class PopupWithForm extends Popup {
         this._formElement.reset();
     }
 }
-
-// const profileName = '';
-// const profileJob = '';
-
-// const editProfileModal = new PopupWithForm('.popup_type_edit-profile', (data) => {
-//     profileName.textContent = data.name;
-//     profileJob.textContent = data.profession;
-// });
+// <=====
 
 export { PopupWithForm };

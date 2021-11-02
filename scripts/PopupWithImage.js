@@ -1,5 +1,6 @@
 import { Popup } from './Popup.js';
 
+// =====>
 class PopupWithImage extends Popup {
 
     open(text, link) {
@@ -12,5 +13,6 @@ class PopupWithImage extends Popup {
         super.open();
     }
 }
+// <=====
 
 export { PopupWithImage };

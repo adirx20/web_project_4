@@ -1,3 +1,4 @@
+// =====>
 class FormValidator {
     constructor(settings, formElement) {
         this._settings = settings;
@@ -77,5 +78,6 @@ class FormValidator {
         this._setEventListeners();
     }
 }
+// <=====
 
 export default FormValidator;

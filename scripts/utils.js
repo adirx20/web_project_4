@@ -1,5 +1,5 @@
+// =====>
 const imageModalSelector = document.querySelector('.popup_type_image');
-const imageModalCloseButton = imageModalSelector.querySelector('.popup__close-button');
 const imageModalImage = document.querySelector('.popup__image');
 const imageModalCaption = document.querySelector('.popup__caption');
 
@@ -29,7 +29,6 @@ const modalClickOutside = (evt) => {
         closeModal(evt.target);
     }
 }
-
-
+// <=====
 
 export { imageModalSelector, imageModalImage, imageModalCaption, openModal, closeModal, modalKeyClose, modalClickOutside };

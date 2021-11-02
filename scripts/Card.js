@@ -1,6 +1,6 @@
 import { imageModalSelector, imageModalImage, imageModalCaption, openModal } from './utils.js';
 
-
+// =====>
 class Card {
     constructor(data, templateCardSelector, handleCardClick) {
         this._text = data.name;
@@ -15,13 +15,6 @@ class Card {
     _handleLikeIcon = () => this._likeButton.classList.toggle('element__like-button_active');
 
     _handleDeleteIcon = () => this._cardElement.remove();
-
-    // _handlePreviewPicture = () => {
-    //     imageModal.open(this._text, this._link);
-
-    //     imageModalImage.src = this._link;
-    //     imageModalCaption.textContent = this._text;
-    // }
 
     _setEventListeners = () => {
         this._image = this._cardElement.querySelector('.element__image');
@@ -47,7 +40,6 @@ class Card {
         return this._cardElement;
     }
 }
-
-
+// <=====
 
 export { Card };
