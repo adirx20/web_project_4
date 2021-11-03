@@ -46,15 +46,15 @@ class FormValidator {
         }
     }
 
-    _isValid = () => this.inputList.every(inputElement => inputElement.validity.valid);
+    _isValid = () => this._inputList.every(inputElement => inputElement.validity.valid);
 
     _setEventListeners = () => {
         const { inputSelector, submitButtonSelector } = this._settings;
 
         this._buttonElement = this._formElement.querySelector(submitButtonSelector);
-        this.inputList = [...this._formElement.querySelectorAll(inputSelector)];
+        this._inputList = [...this._formElement.querySelectorAll(inputSelector)];
 
-        this.inputList.forEach(inputElement => {
+        this._inputList.forEach(inputElement => {
             inputElement.addEventListener('input', () => {
                 this._checkValidity(inputElement);
                 this._toggleButtonState();
@@ -63,7 +63,7 @@ class FormValidator {
     }
 
     resetValidation = () => {
-        this.inputList.forEach(inputElement => {
+        this._inputList.forEach(inputElement => {
             this._hideError(inputElement);
         });
 

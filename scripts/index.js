@@ -3,6 +3,7 @@ import { Card } from './Card.js';
 import { PopupWithImage } from './PopupWithImage.js';
 import { PopupWithForm } from './PopupWithForm.js';
 import { UserInfo } from './UserInfo.js';
+import { Section } from './Section.js';
 
 // =====>
 // SETTINGS
@@ -42,11 +43,10 @@ const initialCards = [
   }
 ];
 
-const cardsContainer = document.querySelector('.elements');
-
 // SELECTORS
 const editProfileModalSelector = document.querySelector('.popup_type_edit-profile');
 const addCardModalSelector = document.querySelector('.popup_type_add-card');
+const cardTemplateSelector = '.card-template';
 
 // OPEN BUTTONS
 const editProfileButton = document.querySelector('.profile__edit-button');
@@ -60,9 +60,13 @@ const profileJobInput = document.querySelector('.form__input_type_profession');
 const editProfileForm = editProfileModalSelector.querySelector('.form');
 const addCardForm = addCardModalSelector.querySelector('.form');
 
-// // PROFILE MODAL ELEMENTS
-// const profileNameElement = document.querySelector('.profile__name');
-// const profileJobElement = document.querySelector('.profile__profession');
+// CREATE AND RENDER CARD
+const createCard = (data) => {
+  const card = new Card(data, cardTemplateSelector, (text, link) => {
+    imageModal.open(text, link);
+  });
+  return card.getCardElement();
+}
 
 // VALIDATORS
 const editProfileFormValidator = new FormValidator(settings, editProfileForm);
@@ -78,6 +82,17 @@ const userInfo = new UserInfo({
   profileJobSelector: '.profile__profession'
 });
 
+// SECTION
+const section = new Section({
+  items: initialCards,
+  renderer: (data) => {
+    const card = createCard(data);
+    section.addItem(card);
+  }
+}, '.elements');
+
+section.render();
+
 // MODALS
 const imageModal = new PopupWithImage('.popup_type_image');
 imageModal.setEventListeners();
@@ -86,37 +101,19 @@ const editProfileModal = new PopupWithForm('.popup_type_edit-profile', data => u
 editProfileModal.setEventListeners();
 
 const addCardModal = new PopupWithForm('.popup_type_add-card', (data) => {
-  renderCard({
+  const card = createCard({
     name: data['card-title'],
     link: data['card-link']
   });
+  section.addItem(card);
 });
 addCardModal.setEventListeners();
 
-// FUNCTIONS
-const cardTemplateSelector = '.card-template';
-
-const createCard = (data) => {
-  const card = new Card(data, cardTemplateSelector, (text, link) => {
-    imageModal.open(text, link);
-  });
-
-  return card.getCardElement();
-}
-
-const renderCard = (data) => {
-  const cardElement = createCard(data);
-
-  cardsContainer.prepend(cardElement);
-}
-
-// OPEN EVENT LISTENERS
+// OPEN BUTTONS EVENT LISTENERS
 // EDIT PROFILE
 editProfileButton.addEventListener('click', () => {
   editProfileFormValidator.resetValidation();
-const userData = userInfo.getUserInfo();
-  // const name = document.querySelector('.profile__name');
-  // const job = document.querySelector('.profile__profession'); ==================================================LAST SESSION==============================
+  const userData = userInfo.getUserInfo();
 
   profileNameInput.value = userData.name;
   profileJobInput.value = userData.job;
@@ -132,7 +129,4 @@ addCardButton.addEventListener('click', () => {
 
   addCardModal.open();
 });
-
-// GENERATE CARDS
-initialCards.forEach(card => renderCard(card));
 // <=====
