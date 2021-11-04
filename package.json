@@ -1,0 +1,23 @@
+{
+  "name": "web_project_4",
+  "version": "1.0.0",
+  "description": "* Intro\r * Figma\r * Sections\r * Future Upgrades\r * GitPages Link",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adirx20/web_project_4.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/adirx20/web_project_4/issues"
+  },
+  "homepage": "https://github.com/adirx20/web_project_4#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "webpack": "^5.61.0"
+  }
+}
