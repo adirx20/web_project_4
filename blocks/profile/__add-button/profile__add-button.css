@@ -7,7 +7,7 @@
     background-color: rgba(0, 0, 0, 1);
     border: 2px solid rgba(255, 255, 255, 1);
     border-radius: 2px;
-    background: url('../../../images/add-button.svg') center no-repeat;
+    background: url('../../../src/images/add-button.svg') center no-repeat;
 }
 
 @media screen and (max-width: 910px) {
