@@ -5,6 +5,7 @@ import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
 import { UserInfo } from '../components/UserInfo.js';
 import { Section } from '../components/Section.js';
+import { api } from '../components/Api.js';
 
 // =====>
 // SETTINGS
@@ -15,34 +16,6 @@ const settings = {
   inputErrorClass: 'form__input_theme_error',
   errorClass: "popup__error_visible"
 };
-
-// CARDS
-const initialCards = [
-  {
-    name: "Yosemite Valley",
-    link: "https://code.s3.yandex.net/web-code/yosemite.jpg"
-  },
-  {
-    name: "Lake Louise",
-    link: "https://code.s3.yandex.net/web-code/lake-louise.jpg"
-  },
-  {
-    name: "Bald Mountains",
-    link: "https://code.s3.yandex.net/web-code/bald-mountains.jpg"
-  },
-  {
-    name: "Latemar",
-    link: "https://code.s3.yandex.net/web-code/latemar.jpg"
-  },
-  {
-    name: "Vanoise National Park",
-    link: "https://code.s3.yandex.net/web-code/vanoise.jpg"
-  },
-  {
-    name: "Lago di Braies",
-    link: "https://code.s3.yandex.net/web-code/lago.jpg"
-  }
-];
 
 // SELECTORS
 const editProfileModalSelector = document.querySelector('.popup_type_edit-profile');
@@ -77,6 +50,13 @@ const addCardFormValidator = new FormValidator(settings, addCardForm);
 editProfileFormValidator.enableValidation();
 addCardFormValidator.enableValidation();
 
+// API
+api.getInitialCards()
+.then((res) => {
+  section.render(res);
+  console.log(res);
+})
+
 // USER INFO
 const userInfo = new UserInfo({
   profileNameSelector: '.profile__name',
@@ -85,14 +65,11 @@ const userInfo = new UserInfo({
 
 // SECTION
 const section = new Section({
-  items: initialCards,
   renderer: (data) => {
     const card = createCard(data);
     section.addItem(card);
   }
 }, '.elements');
-
-section.render();
 
 // MODALS
 const imageModal = new PopupWithImage('.popup_type_image');
