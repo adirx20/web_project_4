@@ -52,10 +52,16 @@ addCardFormValidator.enableValidation();
 
 // API
 api.getInitialCards()
-.then((res) => {
-  section.render(res);
-  console.log(res);
-})
+  .then((res) => {
+    section.render(res);
+    console.log(res);
+  })
+
+api.getUserInfo()
+  .then((res) => {
+    userInfo.setUserInfo({ name: res.name, profession: res.about });
+    console.log('res:', res);
+  })
 
 // USER INFO
 const userInfo = new UserInfo({
@@ -79,11 +85,15 @@ const editProfileModal = new PopupWithForm('.popup_type_edit-profile', data => u
 editProfileModal.setEventListeners();
 
 const addCardModal = new PopupWithForm('.popup_type_add-card', (data) => {
-  const card = createCard({
-    name: data['card-title'],
-    link: data['card-link']
-  });
-  section.addItem(card);
+  console.log('data', data);
+  api.createCard(data)
+    .then((res) => {
+      const card = createCard({
+        name: data['card-title'], // last wip
+        link: data['card-link']
+      });
+      section.addItem(card);
+    })
 });
 addCardModal.setEventListeners();
 
