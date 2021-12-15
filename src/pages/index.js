@@ -36,9 +36,10 @@ const addCardForm = addCardModalSelector.querySelector('.form');
 
 // CREATE AND RENDER CARD
 const createCard = (data) => {
-  const card = new Card(data, cardTemplateSelector, (text, link) => {
+  const card = new Card(data,
+    (text, link) => {
     imageModal.open(text, link);
-  });
+  }, cardTemplateSelector);
   return card.getCardElement();
 }
 
@@ -87,10 +88,14 @@ editProfileModal.setEventListeners();
 const addCardModal = new PopupWithForm('.popup_type_add-card', (data) => {
   console.log('data', data);
   api.createCard(data)
-    .then((res) => {
-      const card = new Card(data, cardTemplateSelector, () => {
-        imageModal.open(text, link);
-      });
+    .then(res => {
+
+      const card = new Card({
+        data: res,
+        handleCardClick: () => {
+          imageModal.open(res);
+        }
+      }, cardTemplateSelector);
       // const card = createCard({
       //   name: data['card-title'], // last wip
       //   link: data['card-link']
