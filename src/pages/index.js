@@ -88,10 +88,14 @@ const addCardModal = new PopupWithForm('.popup_type_add-card', (data) => {
   console.log('data', data);
   api.createCard(data)
     .then((res) => {
-      const card = createCard({
-        name: data['card-title'], // last wip
-        link: data['card-link']
+      const card = new Card(data, cardTemplateSelector, () => {
+        imageModal.open(text, link);
       });
+      // const card = createCard({
+      //   name: data['card-title'], // last wip
+      //   link: data['card-link']
+      //   data: 
+      // });
       section.addItem(card);
     })
 });
