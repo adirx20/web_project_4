@@ -73,8 +73,14 @@ const userInfo = new UserInfo({
 // SECTION
 const section = new Section({
   renderer: (data) => {
-    const card = createCard(data);
-    section.addItem(card);
+    const card = new Card({
+      data,
+      handleCardClick: () => {
+        imageModal.open(data);
+      }
+    }, cardTemplateSelector);
+
+    section.addItem(card.getCardElement());
   }
 }, '.elements');
 
@@ -89,19 +95,15 @@ const addCardModal = new PopupWithForm('.popup_type_add-card', (data) => {
   console.log('data', data);
   api.createCard(data)
     .then(res => {
-
       const card = new Card({
         data: res,
-        handleCardClick: () => {
+        handleCardClick: () => { // <=============================== LAST WIP - data not define
           imageModal.open(res);
         }
       }, cardTemplateSelector);
-      // const card = createCard({
-      //   name: data['card-title'], // last wip
-      //   link: data['card-link']
-      //   data: 
-      // });
-      section.addItem(card);
+      console.log(res)
+ 
+      section.addItem(card.getCardElement());
     })
 });
 addCardModal.setEventListeners();
