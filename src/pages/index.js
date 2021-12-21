@@ -93,18 +93,26 @@ editProfileModal.setEventListeners();
 
 const addCardModal = new PopupWithForm('.popup_type_add-card', (data) => {
   console.log('data', data);
+
   api.createCard(data)
-    .then(res => {
-      const card = new Card({
-        data: res,
-        handleCardClick: () => { // <=============================== LAST WIP - data not define
-          imageModal.open(res);
-        }
-      }, cardTemplateSelector);
-      console.log(res)
+  .then(res => {
+    console.log('res', res);
+  })
+  
+
+
+  // api.createCard(data)
+  //   .then(res => {
+  //     const card = new Card({
+  //       data: res,
+  //       handleCardClick: () => { // <=============================== LAST WIP - data not define
+  //         imageModal.open(res);
+  //       }
+  //     }, cardTemplateSelector);
+  //     console.log(res)
  
-      section.addItem(card.getCardElement());
-    })
+  //     section.addItem(card.getCardElement());
+  //   })
 });
 addCardModal.setEventListeners();
 
