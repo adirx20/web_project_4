@@ -92,20 +92,12 @@ const editProfileModal = new PopupWithForm('.popup_type_edit-profile', data => u
 editProfileModal.setEventListeners();
 
 const addCardModal = new PopupWithForm('.popup_type_add-card', (data) => {
-  console.log('data', data);
-
-  // api.createCard(data)
-  // .then(res => {
-  //   console.log('res', res, 'data', data);
-  // })
-  
-
 
   api.createCard(data)
     .then(res => {
       const card = new Card({
         data: res,
-        handleCardClick: () => { // <=============================== LAST WIP - data not define
+        handleCardClick: () => {
           imageModal.open(res.name, res.link);
         }
       }, cardTemplateSelector);
