@@ -34,14 +34,14 @@ const profileJobInput = document.querySelector('.form__input_type_profession');
 const editProfileForm = editProfileModalSelector.querySelector('.form');
 const addCardForm = addCardModalSelector.querySelector('.form');
 
-// CREATE AND RENDER CARD
-const createCard = (data) => {
-  const card = new Card(data,
-    (text, link) => {
-    imageModal.open(text, link);
-  }, cardTemplateSelector);
-  return card.getCardElement();
-}
+// // CREATE AND RENDER CARD
+// const createCard = (data) => {
+//   const card = new Card(data,
+//     (text, link) => {
+//     imageModal.open(text, link);
+//   }, cardTemplateSelector);
+//   return card.getCardElement();
+// }
 
 // VALIDATORS
 const editProfileFormValidator = new FormValidator(settings, editProfileForm);
@@ -73,16 +73,23 @@ const userInfo = new UserInfo({
 // SECTION
 const section = new Section({
   renderer: (data) => {
-    const card = new Card({
-      data,
-      handleCardClick: () => {
-        imageModal.open(data.name, data.link);
-      }
-    }, cardTemplateSelector);
-
-    section.addItem(card.getCardElement());
+    createCard(data);
   }
 }, '.elements');
+
+function createCard(data) {
+  const card = new Card({
+    data,
+    handleCardClick: () => {
+      imageModal.open(data.name, data.link);
+    },
+    handleDeleteCard: () => {
+      console.log('1234');
+    }
+  }, cardTemplateSelector);
+
+  section.addItem(card.getCardElement());
+}
 
 // MODALS
 const imageModal = new PopupWithImage('.popup_type_image');
@@ -95,15 +102,7 @@ const addCardModal = new PopupWithForm('.popup_type_add-card', (data) => {
 
   api.createCard(data)
     .then(res => {
-      const card = new Card({
-        data: res,
-        handleCardClick: () => {
-          imageModal.open(res.name, res.link);
-        }
-      }, cardTemplateSelector);
-      console.log(res)
- 
-      section.addItem(card.getCardElement());
+      createCard(res);
     })
 });
 addCardModal.setEventListeners();
