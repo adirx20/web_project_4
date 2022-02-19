@@ -7,14 +7,15 @@ class PopupWithSubmit extends Popup {
     }
 
     setEventListeners() {
-        super.setEventListeners();
-
-        this._formElement.addEventListener('submit', (evt) => {
+        
+        this._popupElement.addEventListener('submit', (evt) => {
             evt.preventDefault();
             this._submitHandler();
-            this.close();
+            // this.close();
         }
         );
+        
+        super.setEventListeners();
     }
 }
 // <=====

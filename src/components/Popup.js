@@ -4,6 +4,7 @@ class Popup {
         this._popupElement = document.querySelector(popupSelector);
         this.close = this.close.bind(this);
         this._handleEscClose = this._handleEscClose.bind(this);
+        this._formElement = this._popupElement.querySelector('.form');
     }
 
     _handleEscClose(evt) {

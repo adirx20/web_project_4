@@ -32,6 +32,13 @@ class Api {
       })
     })
   }
+
+  deleteCard(cardId) {
+    return customFetch(`${this._baseUrl}/cards/${cardId}`, {
+      headers: this._headers,
+      method: 'DELETE',
+    })
+  }
 }
 
 const api = new Api({

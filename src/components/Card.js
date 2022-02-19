@@ -3,6 +3,7 @@ class Card {
     constructor({ data, handleCardClick, handleDeleteCard }, templateCardSelector) {
         this._text = data.name;
         this._link = data.link;
+        this._id = data._id;
         this._templateCardSelector = templateCardSelector;
         this._handleCardClick = handleCardClick;
         this._handleDeleteCard = handleDeleteCard;
@@ -13,7 +14,10 @@ class Card {
 
     _handleLikeIcon = () => this._likeButton.classList.toggle('element__like-button_active');
 
-    // _handleDeleteIcon = () => this._cardElement.remove();
+    removeCard() {
+        this._cardElement.remove();
+        this._cardElement = null;
+    }
 
     _setEventListeners = () => {
         this._image = this._cardElement.querySelector('.element__image');
@@ -21,7 +25,7 @@ class Card {
         this._likeButton = this._cardElement.querySelector('.element__like-button');
 
         this._likeButton.addEventListener('click', () => this._handleLikeIcon());
-        this._deleteButton.addEventListener('click', () => this._handleDeleteCard());
+        this._deleteButton.addEventListener('click', () => this._handleDeleteCard(this._id));
         this._image.addEventListener('click', () => this._handleCardClick(this._text, this._link));
     }
 

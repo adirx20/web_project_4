@@ -35,15 +35,6 @@ const profileJobInput = document.querySelector('.form__input_type_profession');
 const editProfileForm = editProfileModalSelector.querySelector('.form');
 const addCardForm = addCardModalSelector.querySelector('.form');
 
-// // CREATE AND RENDER CARD
-// const createCard = (data) => {
-//   const card = new Card(data,
-//     (text, link) => {
-//     imageModal.open(text, link);
-//   }, cardTemplateSelector);
-//   return card.getCardElement();
-// }
-
 // VALIDATORS
 const editProfileFormValidator = new FormValidator(settings, editProfileForm);
 const addCardFormValidator = new FormValidator(settings, addCardForm);
@@ -84,8 +75,18 @@ function createCard(data) {
     handleCardClick: () => {
       imageModal.open(data.name, data.link);
     },
-    handleDeleteCard: () => {
-      console.log('1234');
+    handleDeleteCard: (id) => {
+      console.log('1234', id);
+      confirmModal.open();
+
+      confirmModal.setAction(() => {
+        api.deleteCard(id)
+          .then(res => {
+            console.log('card is deleted!!!', res, id); 
+            card.removeCard();
+            confirmModal.close();
+          })
+      })
     }
   }, cardTemplateSelector);
 
@@ -93,6 +94,9 @@ function createCard(data) {
 }
 
 // MODALS
+const confirmModal = new PopupWithSubmit('.popup_type_delete-card');
+confirmModal.setEventListeners();
+
 const imageModal = new PopupWithImage('.popup_type_image');
 imageModal.setEventListeners();
 
