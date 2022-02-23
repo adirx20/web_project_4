@@ -44,16 +44,24 @@ editProfileFormValidator.enableValidation();
 addCardFormValidator.enableValidation();
 
 // API
-api.getInitialCards()
-  .then((res) => {
-    section.render(res);
-    console.log(res);
-  })
+// api.getInitialCards()
+//   .then((res) => {
+//     section.render(res);
+//     console.log(res);
+//   })
 
-api.getUserInfo()
-  .then((res) => {
-    userInfo.setUserInfo({ name: res.name, profession: res.about });
-    console.log('res:', res);
+// api.getUserInfo()
+//   .then((res) => {
+//     userInfo.setUserInfo({ name: res.name, profession: res.about });
+//     console.log('res:', res);
+//   })
+
+
+  Promise.all([api.getInitialCards(), api.getUserInfo()])
+  .then(([cardData, userData]) => {
+    section.render(cardData);
+
+    userInfo.setUserInfo({ name: userData.name, profession: userData.about })
   })
 
 // USER INFO
