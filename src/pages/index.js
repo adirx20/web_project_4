@@ -43,22 +43,13 @@ const addCardFormValidator = new FormValidator(settings, addCardForm);
 editProfileFormValidator.enableValidation();
 addCardFormValidator.enableValidation();
 
-// API
-// api.getInitialCards()
-//   .then((res) => {
-//     section.render(res);
-//     console.log(res);
-//   })
-
-// api.getUserInfo()
-//   .then((res) => {
-//     userInfo.setUserInfo({ name: res.name, profession: res.about });
-//     console.log('res:', res);
-//   })
-
+// GET INITIAL CARDS AND USER INFO
+let userId;
 
   Promise.all([api.getInitialCards(), api.getUserInfo()])
   .then(([cardData, userData]) => {
+    userId = userData._id;
+    console.log('cardData:', cardData);
     section.render(cardData);
 
     userInfo.setUserInfo({ name: userData.name, profession: userData.about })
@@ -84,7 +75,6 @@ function createCard(data) {
       imageModal.open(data.name, data.link);
     },
     handleDeleteCard: (id) => {
-      console.log('1234', id);
       confirmModal.open();
 
       confirmModal.setAction(() => {
@@ -96,7 +86,7 @@ function createCard(data) {
           })
       })
     }
-  }, cardTemplateSelector);
+  }, cardTemplateSelector, userId);
 
   section.addItem(card.getCardElement());
 }
