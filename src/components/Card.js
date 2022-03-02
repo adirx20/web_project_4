@@ -1,6 +1,6 @@
 // =====>
 class Card {
-    constructor({ data, handleCardClick, handleDeleteCard }, templateCardSelector, userId) {
+    constructor({ data, handleCardClick, handleDeleteCard, handleLikeIcon }, templateCardSelector, userId) {
         this._text = data.name;
         this._link = data.link;
         this._id = data._id;
@@ -9,6 +9,7 @@ class Card {
         this._templateCardSelector = templateCardSelector;
         this._handleCardClick = handleCardClick;
         this._handleDeleteCard = handleDeleteCard;
+        this._handleLikeIcon = handleLikeIcon;
         this._userId = userId;
         console.log('this._userId', userId);
 
@@ -16,7 +17,9 @@ class Card {
             .content.querySelector('.element');
     }
 
-    _handleLikeIcon = () => this._likeButton.classList.toggle('element__like-button_active');
+    isLiked() {
+        return this._likes.some((person) => person._id === this._userId);
+    }
 
     removeCard() {
         this._cardElement.remove();
@@ -28,9 +31,17 @@ class Card {
         this._deleteButton = this._cardElement.querySelector('.element__delete-button');
         this._likeButton = this._cardElement.querySelector('.element__like-button');
 
-        this._likeButton.addEventListener('click', () => this._handleLikeIcon());
+        this._likeButton.addEventListener('click', () => this._handleLikeIcon(this._id));
         this._deleteButton.addEventListener('click', () => this._handleDeleteCard(this._id));
         this._image.addEventListener('click', () => this._handleCardClick(this._text, this._link));
+    }
+
+    likeCard = (newLikes) => {
+        this._likes = newLikes;
+
+        this._cardElement.querySelector('.element__likes-count').textContent = this._likes.length;
+
+        this._likeButton.classList.toggle('element__like-button_active');
     }
 
     getCardElement = () => {
@@ -49,7 +60,12 @@ class Card {
         }
 
         this._cardElement.querySelector('.element__likes-count').textContent = this._likes.length;
-        // element__likes-count
+        
+        const isLiked = this._likes.some((person) => person._id === this._userId);
+
+        if(this.isLiked()) {
+            this.likeCard(this._likes);
+        }
 
         return this._cardElement;
     }

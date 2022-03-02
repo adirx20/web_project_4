@@ -19,7 +19,8 @@
     <main class='content'>
 
       <section class='profile'>
-        <img class='profile__avatar' src="<%= require('./images/profile-avatar.jpg')%>" alt='Profile picture of an handsome man'>
+        <img class='profile__avatar' src="<%= require('./images/profile-avatar.jpg')%>"
+          alt='Profile picture of an handsome man'>
         <div class='profile__info-container'>
           <h1 class='profile__name'>Adir&nbsp;Sason</h1>
           <button class='profile__edit-button button-effect' type='button' aria-label='edit'></button>
@@ -97,8 +98,10 @@
       <button class='element__delete-button button-effect' aria-label='delete'></button>
       <div class='element__bar'>
         <h2 class='element__title'></h2>
-        <button class='element__like-button' type='button' aria-label='like'></button>
-        <span class='element__likes-count' ></span>
+        <div class='element__likes-container'>
+          <button class='element__like-button' type='button' aria-label='like'></button>
+          <span class='element__likes-count'></span>
+        </div>
       </div>
     </article>
   </template>

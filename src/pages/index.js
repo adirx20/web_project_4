@@ -46,7 +46,7 @@ addCardFormValidator.enableValidation();
 // GET INITIAL CARDS AND USER INFO
 let userId;
 
-  Promise.all([api.getInitialCards(), api.getUserInfo()])
+Promise.all([api.getInitialCards(), api.getUserInfo()])
   .then(([cardData, userData]) => {
     userId = userData._id;
     console.log('cardData:', cardData);
@@ -74,13 +74,33 @@ function createCard(data) {
     handleCardClick: () => {
       imageModal.open(data.name, data.link);
     },
+    handleLikeIcon: (id) => {
+      const isAlreadyLiked = card.isLiked();
+
+      if (isAlreadyLiked) {
+        console.log('should dislike')
+        api.unlikeCard(id)
+        .then(res => {
+          card.likeCard(res.likes);
+          console.log('res', res, res.likes);
+        })
+        // remove like
+      } else {
+        console.log('should like')
+        api.likeCard(id)
+          .then(res => {
+            card.likeCard(res.likes);
+            console.log('res', res, res.likes);
+          })
+      }
+    },
     handleDeleteCard: (id) => {
       confirmModal.open();
 
       confirmModal.setAction(() => {
         api.deleteCard(id)
           .then(res => {
-            console.log('card is deleted!!!', res, id); 
+            console.log('card is deleted!!!', res, id);
             card.removeCard();
             confirmModal.close();
           })
