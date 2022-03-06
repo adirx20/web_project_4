@@ -22,6 +22,7 @@ const settings = {
 const editProfileModalSelector = document.querySelector('.popup_type_edit-profile');
 const editAvatarModalSelector = document.querySelector('.popup_type_edit-avatar');
 const addCardModalSelector = document.querySelector('.popup_type_add-card');
+const avatarSelector = document.querySelector('.profile__avatar');
 const cardTemplateSelector = '.card-template';
 
 // OPEN BUTTONS
@@ -54,10 +55,12 @@ let userId;
 Promise.all([api.getInitialCards(), api.getUserInfo()])
   .then(([cardData, userData]) => {
     userId = userData._id;
-    console.log('cardData:', cardData);
+
     section.render(cardData);
 
     userInfo.setUserInfo({ name: userData.name, about: userData.about })
+
+    renderAvatar(userData.avatar);
   })
 
 // USER INFO
@@ -83,19 +86,15 @@ function createCard(data) {
       const isAlreadyLiked = card.isLiked();
 
       if (isAlreadyLiked) {
-        console.log(data)
         api.unlikeCard(id)
         .then(res => {
           card.likeCard(res.likes);
-          console.log('res', res, res.likes);
         })
         // remove like
       } else {
-        console.log('should like')
         api.likeCard(id)
           .then(res => {
             card.likeCard(res.likes);
-            console.log('res', res, res.likes);
           })
       }
     },
@@ -105,7 +104,6 @@ function createCard(data) {
       confirmModal.setAction(() => {
         api.deleteCard(id)
           .then(res => {
-            console.log('card is deleted!!!', res, id);
             card.removeCard();
             confirmModal.close();
           })
@@ -118,8 +116,11 @@ function createCard(data) {
 
 // EDIT AVATAR FUNCTION
 function editAvatar(data) {
-  const avatarSelector = document.querySelector('.profile__avatar');
-  avatarSelector.style.backgroundImage = `url(${data})`; // IT SHOULDNT BE THE BUTTON!!!
+  avatarSelector.style.backgroundImage = `url(${data})`;
+}
+
+function renderAvatar(data) {
+  avatarSelector.style.backgroundImage = `url(${data})`
 }
 
 // MODALS
@@ -133,11 +134,9 @@ imageModal.setEventListeners();
 
 // EDIT PROFILE
 const editProfileModal = new PopupWithForm('.popup_type_edit-profile', (data) => {
-  console.log('hello', data);
 
   api.editProfile(data)
   .then(res => {
-    console.log('res', res);
     userInfo.setUserInfo(res);
   })
   })
@@ -146,11 +145,9 @@ editProfileModal.setEventListeners();
 
 // EDIT AVATAR
 const editAvatarModal = new PopupWithForm('.popup_type_edit-avatar', (data) => {
-  console.log('data', data);
   api.editAvatar(data)
-  .then(res => {
-    console.log('res', res); // NEED TO TAKE CARE OF CONNECTING THE URL TO THE BUTTON
-    editAvatar(res.avatar);
+  .then(data => {
+    editAvatar(data.avatar);
   })
 })
 editAvatarModal.setEventListeners();

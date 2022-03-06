@@ -7,3 +7,11 @@
     display: flex;
     position: relative;
 }
+
+.profile__avatar-container:hover .profile__avatar-overlay {
+    background-color: rgba(0, 0, 0, .8);
+}
+
+.profile__avatar-container:hover .profile__avatar-button {
+    visibility: visible;
+}
