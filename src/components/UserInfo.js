@@ -8,13 +8,13 @@ class UserInfo {
     getUserInfo() {
         return {
             name: this._profileName.textContent,
-            job: this._profileJob.textContent
+            about: this._profileJob.textContent
         }
     }
 
-    setUserInfo({ name, profession }) {
-        this._profileName.textContent = name;
-        this._profileJob.textContent = profession;
+    setUserInfo(userData) {
+        this._profileName.textContent = userData.name;
+        this._profileJob.textContent = userData.about;
     }
 }
 // <=====

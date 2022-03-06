@@ -19,12 +19,15 @@
     <main class='content'>
 
       <section class='profile'>
-        <img class='profile__avatar' src="<%= require('./images/profile-avatar.jpg')%>"
-          alt='Profile picture of an handsome man'>
+        <div class='profile__avatar-container'>
+          <img class='profile__avatar' src='#' alt=''>            
+          <div class='profile__avatar-overlay'></div>
+          <button class='profile__avatar-button button-effect' type='button' aria-label='edit'></button>
+        </div>
         <div class='profile__info-container'>
-          <h1 class='profile__name'>Adir&nbsp;Sason</h1>
+          <h1 class='profile__name'></h1>
           <button class='profile__edit-button button-effect' type='button' aria-label='edit'></button>
-          <p class='profile__profession'>Traveler</p>
+          <p class='profile__profession'></p>
         </div>
         <button class='profile__add-button button-effect' type='button' aria-label='add'></button>
       </section>
@@ -50,6 +53,19 @@
           <input id='proffession-input' class='form__input form__input_type_profession' type='text' name='profession'
             placeholder='About me' value='' required minlength='2' maxlength='200'>
           <span id='proffession-input-error' class='form__input-error-message'></span>
+          <button class='form__save-button' type='submit'>Save</button>
+        </form>
+      </div>
+    </div>
+
+    <div class='popup popup_type_edit-avatar'>
+      <div class='popup__container'>
+        <button class='popup__close-button button-effect' type='button' aria-label='close'></button>
+        <h2 class='popup__title'>Change profile picture</h2>
+        <form class='form' name='new'>
+          <input id='avatar-link-input' class='form__input form__input_type_avatar-link' type='url' name='avatar-link'
+            placeholder='Image URL' value='' required>
+          <span id='avatar-link-input-error' class='form__input-error-message'></span>
           <button class='form__save-button' type='submit'>Save</button>
         </form>
       </div>
