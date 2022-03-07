@@ -6,12 +6,10 @@ class Card {
         this._id = data._id;
         this._ownerId = data.owner._id;
         this._likes = data.likes;
-        this._templateCardSelector = templateCardSelector;
         this._handleCardClick = handleCardClick;
         this._handleDeleteCard = handleDeleteCard;
         this._handleLikeIcon = handleLikeIcon;
         this._userId = userId;
-        console.log('this._userId', userId);
 
         this._cardTemplate = document.querySelector(templateCardSelector)
             .content.querySelector('.element');
@@ -39,9 +37,13 @@ class Card {
     likeCard = (newLikes) => {
         this._likes = newLikes;
 
-        this._cardElement.querySelector('.element__likes-count').textContent = this._likes.length;
+        this._renderLikes();
 
         this._likeButton.classList.toggle('element__like-button_active');
+    }
+
+    _renderLikes = () => {
+        this._cardElement.querySelector('.element__likes-count').textContent = this._likes.length;
     }
 
     getCardElement = () => {
@@ -59,13 +61,12 @@ class Card {
             this._deleteButton.style.display = 'none';
         }
 
-        this._cardElement.querySelector('.element__likes-count').textContent = this._likes.length;
+        this._renderLikes();
         
-        const isLiked = this._likes.some((person) => person._id === this._userId);
-
         if(this.isLiked()) {
             this.likeCard(this._likes);
         }
+
 
         return this._cardElement;
     }

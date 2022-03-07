@@ -6,7 +6,7 @@ import { PopupWithForm } from '../components/PopupWithForm.js';
 import { PopupWithSubmit } from '../components/PopupWithSubmit.js';
 import { UserInfo } from '../components/UserInfo.js';
 import { Section } from '../components/Section.js';
-import { api } from '../components/Api.js';
+import { api } from '../utils/Api.js';
 
 // =====>
 // SETTINGS
@@ -62,6 +62,7 @@ Promise.all([api.getInitialCards(), api.getUserInfo()])
 
     renderAvatar(userData.avatar);
   })
+  .catch(err => console.log(`Error: ${err}`))
 
 // USER INFO
 const userInfo = new UserInfo({
@@ -90,12 +91,14 @@ function createCard(data) {
         .then(res => {
           card.likeCard(res.likes);
         })
+        .catch(err => console.log(`Error: ${err}`))
         // remove like
       } else {
         api.likeCard(id)
           .then(res => {
             card.likeCard(res.likes);
           })
+          .catch(err => console.log(`Error: ${err}`))
       }
     },
     handleDeleteCard: (id) => {
@@ -107,6 +110,7 @@ function createCard(data) {
             card.removeCard();
             confirmModal.close();
           })
+          .catch(err => console.log(`Error: ${err}`))
       })
     }
   }, cardTemplateSelector, userId);
@@ -138,7 +142,9 @@ const editProfileModal = new PopupWithForm('.popup_type_edit-profile', (data) =>
   api.editProfile(data)
   .then(res => {
     userInfo.setUserInfo(res);
+    editProfileModal.close();
   })
+  .catch(err => console.log(`Error: ${err}`))
   })
 
 editProfileModal.setEventListeners();
@@ -148,7 +154,10 @@ const editAvatarModal = new PopupWithForm('.popup_type_edit-avatar', (data) => {
   api.editAvatar(data)
   .then(data => {
     editAvatar(data.avatar);
+    editAvatarModal.close();
   })
+  .catch(err => console.log(`Error: ${err}`))
+  .finally(editAvatarModalSelector.querySelector('.form__save-button').textContent = 'Saving...')
 })
 editAvatarModal.setEventListeners();
 
@@ -158,7 +167,10 @@ const addCardModal = new PopupWithForm('.popup_type_add-card', (data) => {
   api.createCard(data)
     .then(res => {
       createCard(res);
+      addCardModal.close();
     })
+    .catch(err => console.log(`Error: ${err}`))
+    .finally(addCardModalSelector.querySelector('.form__save-button').textContent = 'Saving...')
 });
 addCardModal.setEventListeners();
 
@@ -171,6 +183,8 @@ editProfileButton.addEventListener('click', () => {
   profileNameInput.value = userData.name;
   profileJobInput.value = userData.about;
 
+  editProfileModalSelector.querySelector('.form__save-button').textContent = 'Save';
+
   editProfileModal.open();
 });
 
@@ -180,6 +194,8 @@ editAvatarButton.addEventListener('click', () => {
 
   editAvatarFormValidator.resetValidation();
 
+  editAvatarModalSelector.querySelector('.form__save-button').textContent = 'Save';
+
   editAvatarModal.open();
 })
 
@@ -188,6 +204,8 @@ addCardButton.addEventListener('click', () => {
   addCardForm.reset();
 
   addCardFormValidator.resetValidation();
+
+  addCardModalSelector.querySelector('.form__save-button').textContent = 'Save';
 
   addCardModal.open();
 });
