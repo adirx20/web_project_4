@@ -19,10 +19,10 @@ const settings = {
 };
 
 // SELECTORS
-const editProfileModalSelector = document.querySelector('.popup_type_edit-profile');
-const editAvatarModalSelector = document.querySelector('.popup_type_edit-avatar');
-const addCardModalSelector = document.querySelector('.popup_type_add-card');
-const avatarSelector = document.querySelector('.profile__avatar');
+const editProfileModalElement = document.querySelector('.popup_type_edit-profile');
+const editAvatarModalElement = document.querySelector('.popup_type_edit-avatar');
+const addCardModalElement = document.querySelector('.popup_type_add-card');
+const avatarElement = document.querySelector('.profile__avatar');
 const cardTemplateSelector = '.card-template';
 
 // OPEN BUTTONS
@@ -35,9 +35,9 @@ const profileNameInput = document.querySelector('.form__input_type_name');
 const profileJobInput = document.querySelector('.form__input_type_profession');
 
 // FORMS
-const editProfileForm = editProfileModalSelector.querySelector('.form');
-const editAvatarForm = editAvatarModalSelector.querySelector('.form');
-const addCardForm = addCardModalSelector.querySelector('.form');
+const editProfileForm = editProfileModalElement.querySelector('.form');
+const editAvatarForm = editAvatarModalElement.querySelector('.form');
+const addCardForm = addCardModalElement.querySelector('.form');
 
 // VALIDATORS
 const editProfileFormValidator = new FormValidator(settings, editProfileForm);
@@ -60,7 +60,7 @@ Promise.all([api.getInitialCards(), api.getUserInfo()])
 
     userInfo.setUserInfo({ name: userData.name, about: userData.about })
 
-    renderAvatar(userData.avatar);
+    editAvatar(userData.avatar);
   })
   .catch(err => console.log(`Error: ${err}`))
 
@@ -120,11 +120,16 @@ function createCard(data) {
 
 // EDIT AVATAR FUNCTION
 function editAvatar(data) {
-  avatarSelector.style.backgroundImage = `url(${data})`;
+  avatarElement.style.backgroundImage = `url(${data})`;
 }
 
-function renderAvatar(data) {
-  avatarSelector.style.backgroundImage = `url(${data})`
+// FORMS FUNCTIONS
+function renderLoading(button, isLoading) {
+  if (isLoading) {
+    button.querySelector('.form__save-button').textContent = 'Saving...';
+  } else {
+    button.querySelector('.form__save-button').textContent = 'Save';
+  }
 }
 
 // MODALS
@@ -138,6 +143,7 @@ imageModal.setEventListeners();
 
 // EDIT PROFILE
 const editProfileModal = new PopupWithForm('.popup_type_edit-profile', (data) => {
+  renderLoading(editProfileModalElement, true);
 
   api.editProfile(data)
   .then(res => {
@@ -145,24 +151,28 @@ const editProfileModal = new PopupWithForm('.popup_type_edit-profile', (data) =>
     editProfileModal.close();
   })
   .catch(err => console.log(`Error: ${err}`))
+  .finally(() => renderLoading(editProfileModalElement, false))
   })
 
 editProfileModal.setEventListeners();
 
 // EDIT AVATAR
 const editAvatarModal = new PopupWithForm('.popup_type_edit-avatar', (data) => {
+  renderLoading(editAvatarModalElement, true);
+
   api.editAvatar(data)
   .then(data => {
     editAvatar(data.avatar);
     editAvatarModal.close();
   })
   .catch(err => console.log(`Error: ${err}`))
-  .finally(editAvatarModalSelector.querySelector('.form__save-button').textContent = 'Saving...')
+  .finally(() => renderLoading(editAvatarModalElement, false))
 })
 editAvatarModal.setEventListeners();
 
 // ADD CARD
 const addCardModal = new PopupWithForm('.popup_type_add-card', (data) => {
+  renderLoading(addCardModalElement, true);
 
   api.createCard(data)
     .then(res => {
@@ -170,7 +180,7 @@ const addCardModal = new PopupWithForm('.popup_type_add-card', (data) => {
       addCardModal.close();
     })
     .catch(err => console.log(`Error: ${err}`))
-    .finally(addCardModalSelector.querySelector('.form__save-button').textContent = 'Saving...')
+    .finally(() => renderLoading(addCardModalElement, false))
 });
 addCardModal.setEventListeners();
 
@@ -183,8 +193,6 @@ editProfileButton.addEventListener('click', () => {
   profileNameInput.value = userData.name;
   profileJobInput.value = userData.about;
 
-  editProfileModalSelector.querySelector('.form__save-button').textContent = 'Save';
-
   editProfileModal.open();
 });
 
@@ -194,8 +202,6 @@ editAvatarButton.addEventListener('click', () => {
 
   editAvatarFormValidator.resetValidation();
 
-  editAvatarModalSelector.querySelector('.form__save-button').textContent = 'Save';
-
   editAvatarModal.open();
 })
 
@@ -204,8 +210,6 @@ addCardButton.addEventListener('click', () => {
   addCardForm.reset();
 
   addCardFormValidator.resetValidation();
-
-  addCardModalSelector.querySelector('.form__save-button').textContent = 'Save';
 
   addCardModal.open();
 });
