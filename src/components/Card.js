@@ -38,13 +38,18 @@ class Card {
         this._likes = newLikes;
 
         this._renderLikes();
-
-        this._likeButton.classList.toggle('element__like-button_active');
     }
 
     _renderLikes = () => {
         this._cardElement.querySelector('.element__likes-count').textContent = this._likes.length;
-    }
+
+        if (this.isLiked()) {
+            this._likeButton.classList.add('element__like-button_active');
+        } else {
+            this._likeButton.classList.remove('element__like-button_active');
+        }
+    } // THANKS!!! U HELPED ME ALOT! 
+        // AND U HAVE A BEAUTIFUL NAME
 
     getCardElement = () => {
         this._cardElement = this._cardTemplate.cloneNode(true);
@@ -57,16 +62,11 @@ class Card {
 
         this._setEventListeners();
 
-        if(this._ownerId !== this._userId) {
+        if (this._ownerId !== this._userId) {
             this._deleteButton.style.display = 'none';
         }
 
         this._renderLikes();
-        
-        if(this.isLiked()) {
-            this.likeCard(this._likes);
-        }
-
 
         return this._cardElement;
     }
